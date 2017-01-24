@@ -12,13 +12,7 @@ gem 'sprockets-commoner'
 
 
 #ASSETS
-gem 'bootstrap-sass', '~> 3.3.6'
-gem 'hamlit', '~> 2.6.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.2'
-gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
-gem 'babel-transpiler'
 
 # API
 gem 'redis', '~> 3.0'
