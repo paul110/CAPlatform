@@ -27,6 +27,7 @@ gem 'capistrano-bower'
 # MISC
 gem 'aws-sdk', '~> 2.3.0'
 gem 'rails_12factor', group: :production
+gem 'redis-objects'
 
 group :development, :test do
   gem 'byebug', platform: :mri

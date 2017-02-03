@@ -1,28 +1,13 @@
-== README
+```
+opkg update
+opkg install python-openssl #adds ssl support to python
+opkg install distribute #it contains the easy_install command line tool (this can take some time)
+easy_install pip #installs pip  (this can take some time)
+```
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+2. Use pip install requests:
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+```
+pip search requests
+pip install requests
+```
