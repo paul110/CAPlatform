@@ -11,7 +11,13 @@ gem 'redis-namespace'
 gem 'rack-cors', require: 'rack/cors'
 gem 'sprockets', '~> 4.0.0.beta4'
 gem 'sprockets-commoner'
-
+gem 'uglifier', '>= 1.3.0'
+gem 'turbolinks', '~> 5'
+# gem 'coffee-rails', '~> 4.2'
+# gem 'jquery-rails'
+# gem 'babel-transpiler'
+# gem 'hamlit', '~> 2.6.0'
+# gem 'bootstrap-sass', '~> 3.3.6'
 
 #ASSETS
 gem 'turbolinks', '~> 5'
