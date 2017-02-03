@@ -1,6 +1,0 @@
-{
-  "private": true,
-  "dependencies": {
-    "babel-core": "^6.13.2"
-  }
-}
