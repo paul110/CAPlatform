@@ -2,6 +2,11 @@ source 'https://rubygems.org'
 
 ruby '2.4.0'
 
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+
 # CORE
 gem 'rails', '~> 5.0.1'
 gem 'pg', '~> 0.18'
@@ -11,20 +16,15 @@ gem 'redis-namespace'
 gem 'rack-cors', require: 'rack/cors'
 gem 'sprockets', '~> 4.0.0.beta4'
 gem 'sprockets-commoner'
+
+# ASSETS
+gem 'turbolinks', '~> 5'
+gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'turbolinks', '~> 5'
-# gem 'coffee-rails', '~> 4.2'
-# gem 'jquery-rails'
-# gem 'babel-transpiler'
-# gem 'hamlit', '~> 2.6.0'
-# gem 'bootstrap-sass', '~> 3.3.6'
+gem 'coffee-rails', '~> 4.2'
+gem 'jbuilder', '~> 2.5'
+gem 'jquery-rails'
 
-#ASSETS
-gem 'turbolinks', '~> 5'
-
-# API
-gem 'redis', '~> 3.0'
-gem 'active_model_serializers', '~> 0.10.0'
 
 # DEPLOYMENT
 gem 'morpheus-heroku', '0.2.3'
@@ -35,7 +35,6 @@ gem 'capistrano-bower'
 # MISC
 gem 'aws-sdk', '~> 2.3.0'
 gem 'rails_12factor', group: :production
-gem 'redis-objects'
 
 group :development, :test do
   gem 'byebug', platform: :mri
@@ -56,7 +55,6 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'better_errors'
 end
-
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
