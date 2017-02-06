@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
 
@@ -6,7 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module CAPlatform
+module TestHeroku
   class Application < Rails::Application
     config.generators do |g|
       g.test_framework :rspec, fixture: true
