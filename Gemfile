@@ -14,8 +14,6 @@ gem 'puma', '~> 3.0'
 gem 'sidekiq', '~> 4.2.2'
 gem 'redis-namespace'
 gem 'rack-cors', require: 'rack/cors'
-# gem 'sprockets', '~> 4.0.0.beta4'
-# gem 'sprockets-commoner'
 
 # ASSETS
 gem 'turbolinks', '~> 5'
