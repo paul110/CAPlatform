@@ -21,8 +21,8 @@ module CAPlatform
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         # to be decided later
-        origins 'localhost:8000'
-        resource '*', headers: :any, methods: [:get, :post, :options]
+        origins 'localhost:8000', 'localhost:4200'
+        resource '*', headers: :any, methods: [:post, :options, :put]
       end
     end
 
