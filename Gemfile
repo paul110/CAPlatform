@@ -15,6 +15,9 @@ gem 'sidekiq', '~> 4.2.2'
 gem 'redis-namespace'
 gem 'rack-cors', require: 'rack/cors'
 
+# API
+gem 'active_model_serializers', '~> 0.10.0'
+
 # ASSETS
 gem 'turbolinks', '~> 5'
 gem 'sass-rails', '~> 5.0'

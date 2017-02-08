@@ -2,21 +2,18 @@ module Api
   class BoardController < BaseController
     def index
       @board = Board.first
-      render json: { led: @board.button }, status: :ok
+      render json: @board
     end
 
     def create
-      @board = Board.first
-      @board.update board_params
-      ActionCable.server.broadcast 'sketch_channel', message: @board[:button]
-      render json: { ok: true }, status: :created
+      @board = Board.first.update board_params
+      ActionCable.server.broadcast 'sketch_channel', message: @board.button
+      render json: @board, status: :created
     end
     private
 
     def board_params
-      if params[:button].present?
-        params[:button] = !@board.button
-      end
+      @board.toggle(:button) if params[:button].present?
       params.permit(:button)
     end
 
