@@ -8,6 +8,7 @@ module Api
     def create
       @board = Board.first
       @board.update board_params
+      ActionCable.server.broadcast 'sketch_channel', message: @board[:button]
       render json: { ok: true }, status: :created
     end
     private

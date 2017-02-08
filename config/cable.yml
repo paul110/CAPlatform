@@ -1,9 +1,24 @@
-development:
-  adapter: async
-
-test:
-  adapter: async
-
-production:
-  adapter: redis
-  url: redis://localhost:6379/1
+# development:
+#   adapter: async
+#
+# test:
+#   adapter: async
+#
+# production:
+#   adapter: redis
+#   url: redis://localhost:6379/1
+#
+development: &development
+  :url: redis://localhost:6379
+  :host: localhost
+  :port: 6379
+  :timeout: 1
+  :inline: true
+test: *development
+production: &production
+  :url: redis://redistogo:6f1b2abae939127ab79161e904a61e79@porgy.redistogo.com:10012
+  :host: porgy.redistogo.com
+  :port: 10012
+  :password: 6f1b2abae939127ab79161e904a61e79
+  :inline: true
+  :timeout: 1
