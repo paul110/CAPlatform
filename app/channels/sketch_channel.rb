@@ -8,6 +8,7 @@ class SketchChannel < ApplicationCable::Channel
   end
 
   def blink data
-    ActionCable.server.broadcast 'sketch_channel', message: data['message']
+    # ActionCable.server.broadcast 'sketch_channel', message: data['message']
+    InputBroadcastJob.perform_now data
   end
 end
