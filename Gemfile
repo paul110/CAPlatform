@@ -14,6 +14,7 @@ gem 'puma', '~> 3.0'
 gem 'sidekiq', '~> 4.2.2'
 gem 'redis-namespace'
 gem 'rack-cors', require: 'rack/cors'
+gem 'draftsman', '~> 0.6.0'
 
 # API
 gem 'active_model_serializers', '~> 0.10.0'
