@@ -10,6 +10,14 @@ module Api
       ActionCable.server.broadcast 'sketch_channel', message: @board.button
       render json: @board, status: :created
     end
+
+    def show
+      @board = Board.where(mac: params[:mac])
+      respond_to do |format|
+        format.json { render json: @board }
+      end
+    end
+
     private
 
     def board_params
