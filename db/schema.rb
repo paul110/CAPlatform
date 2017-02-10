@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170206161149) do
+ActiveRecord::Schema.define(version: 20170209211102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,10 +23,10 @@ ActiveRecord::Schema.define(version: 20170206161149) do
   end
 
   create_table "sketches", force: :cascade do |t|
-    t.jsonb    "links",      default: "[]", null: false
-    t.jsonb    "boards",     default: "[]", null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.jsonb    "links",      default: [], null: false
+    t.jsonb    "boards",     default: [], null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
 end
