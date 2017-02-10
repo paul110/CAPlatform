@@ -18,8 +18,9 @@ ActiveRecord::Schema.define(version: 20170210131207) do
   create_table "boards", force: :cascade do |t|
     t.string   "mac"
     t.boolean  "button"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "status",     default: 0
   end
 
   create_table "drafts", force: :cascade do |t|
