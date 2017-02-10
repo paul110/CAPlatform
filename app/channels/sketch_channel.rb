@@ -1,11 +1,15 @@
 class SketchChannel < ApplicationCable::Channel
   def subscribed
     stream_from "sketch_channel"
-    Rails.logger.warn Board.find_by(uid: params[:mac])
+    if board = Board.find_by(uid: params[:mac])
+      board.update status: "online"
+    end
   end
 
   def unsubscribed
-    Rails.logger.warn Board.find_by(uid: params[:mac])
+    if board = Board.find_by(uid: params[:mac])
+      board.update status: "offline"
+    end
   end
 
   def blink data
