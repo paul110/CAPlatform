@@ -13,4 +13,5 @@
 #
 
 class Sketch < ApplicationRecord
+  has_drafts
 end
