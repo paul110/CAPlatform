@@ -15,8 +15,14 @@ module Api
     end
 
     def update
-      @sketch.update sketch_params
-      render json: @sketch
+      save_draft_or_activate
+      respond_to do |format|
+        if @sketch.valid?
+          format.json { render json: @sketch, status: :ok }
+        else
+          format.json { render errors: @sketch.errors.full_messages.join(", "), status: :unprocessable_entity }
+        end
+      end
     end
 
     private
@@ -26,7 +32,17 @@ module Api
     end
 
     def sketch_params
-      params.slice(:boards, :links).permit!
+      params.slice(:boards, :links, :status).permit!
+    end
+
+    def save_draft_or_activate
+      @sketch.assign_attributes sketch_params
+      if params[:status] == "pending"
+        @sketch.save_draft
+      else
+        # make the last draft active or just save
+        @sketch.save
+      end
     end
   end
 end

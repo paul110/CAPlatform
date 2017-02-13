@@ -10,6 +10,7 @@
 #  draft_id     :integer
 #  published_at :datetime
 #  trashed_at   :datetime
+#  status       :integer          default("0")
 #
 
 FactoryGirl.define do

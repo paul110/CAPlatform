@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resources :sketch, only: [:index, :show, :create, :update]
   end
 
-  root to: 'home#index'
-
   mount ActionCable.server => "/cable"
+
+  root to: 'home#index'
 end

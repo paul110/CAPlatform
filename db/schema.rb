@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170210131207) do
+ActiveRecord::Schema.define(version: 20170213181018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20170210131207) do
     t.integer  "draft_id"
     t.datetime "published_at"
     t.datetime "trashed_at"
+    t.integer  "status",       default: 0
   end
 
 end
