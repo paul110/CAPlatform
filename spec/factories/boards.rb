@@ -12,6 +12,6 @@
 
 FactoryGirl.define do
   factory :board do
-    uid "MyString"
+    mac "1234"
   end
 end

@@ -13,5 +13,7 @@
 require 'rails_helper'
 
 RSpec.describe Board, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "is valid" do
+    expect(build(:board)).to be_valid
+  end
 end

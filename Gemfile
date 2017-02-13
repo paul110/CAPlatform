@@ -47,6 +47,7 @@ group :development, :test do
   gem 'pry-remote'
   gem 'factory_girl_rails'
   gem 'ffaker'
+  gem 'simplecov', require: false
 end
 
 group :development do
