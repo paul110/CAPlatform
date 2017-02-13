@@ -1,7 +1,7 @@
 module Api
   class BoardController < BaseController
     def index
-      @boards = Board.where.not(uid: nil).limit 10
+      @boards = Board.where.not(mac: nil).limit 10
       render json: @boards, each_serializer: BoardSerializer
     end
 
