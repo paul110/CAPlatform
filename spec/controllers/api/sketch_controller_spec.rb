@@ -22,6 +22,17 @@ RSpec.describe Api::SketchController, type: :controller do
       # Draft sketch should have "custom_one"
       expect(sketch.draft.object.dig("links", 0, "logic")).to eq "custom_one"
     end
+
+    it "publishes the draft" do
+      # Create a Draft
+      put :update, params: sketch_params(logic: "blah")
+      sketch.reload
+      # Publish the draft
+      put :update, params: sketch_params(logic: "custom_one", status: "active")
+
+      expect(sketch.reload.draft?).to be false
+      expect(sketch.links.dig(0, "logic")).to eq "custom_one"
+    end
   end
 
   private

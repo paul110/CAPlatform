@@ -41,6 +41,7 @@ module Api
         @sketch.save_draft
       else
         # make the last draft active or just save
+        @sketch.draft.publish!
         @sketch.save
       end
     end
