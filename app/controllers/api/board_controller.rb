@@ -14,7 +14,7 @@ module Api
     end
 
     def show
-      @board = Board.where(mac: params[:mac])
+      @board = find_board
       respond_to do |format|
         format.json { render json: @board }
       end
@@ -27,5 +27,8 @@ module Api
       params.permit(:button)
     end
 
+    def find_board
+      Board.find_by(mac: params[:id]).presence || Board.find(params[:id])
+    end
   end
 end
