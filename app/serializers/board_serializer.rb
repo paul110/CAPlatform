@@ -1,3 +1,3 @@
 class BoardSerializer < ActiveModel::Serializer
-  attributes :id, :uid, :button
+  attributes :id, :uid, :button, :status
 end

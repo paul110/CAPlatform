@@ -1,8 +1,8 @@
 module Api
   class BoardController < BaseController
     def index
-      @board = Board.first
-      render json: @board
+      @boards = Board.where.not(uid: nil).limit 10
+      render json: @boards, each_serializer: BoardSerializer
     end
 
     def create
