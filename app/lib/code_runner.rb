@@ -1,26 +1,32 @@
 class CodeRunner
-  attr_accessor :sketch, :boards_to_update
+  attr_accessor :board
 
+  # Map of references to code logic options
   OPTIONS = {
     toggle: Toggle
   }
 
-  def initialize board
-    @sketch = find_sketch board.mac
-    @boards_to_update = find_boards board.mac, sketch
+  def self.execute_flow board
+    sketch = find_sketch board.mac
+    boards_to_update = find_boards board.mac, sketch
+    update_boards boards_to_update
+  end
+
+  def initialize mac
+    @board = Board.find_by(mac: mac) or raise "Board Not Found mac: #{mac}"
   end
 
   def run
-    boards_to_update.each do |link|
-      option = link["logic"].to_sym
-      raise "Option not found" unless OPTIONS[option]
-      OPTIONS[option].new(link["to"]).run
-    end
+    notify_board
   end
 
   private
 
-  def find_sketch mac
+  def notify_board
+    ActionCable.server.broadcast 'sketch_channel', message: board.metadata
+  end
+
+  def self.find_sketch mac
     # There should be no problem interpolating here because the mac is a db value
     Sketch
       .where("boards @> '[{\"mac\":\"#{mac}\"}]'")
@@ -28,8 +34,16 @@ class CodeRunner
       .take
   end
 
-  def find_boards mac, sketch
+  def self.find_boards mac, sketch
     sketch.links.select{ |l| l["from"] == mac }
+  end
+
+  def self.update_boards boards_to_update
+    boards_to_update.each do |link|
+      option = link["logic"].to_sym
+      raise "Option not found" unless OPTIONS[option]
+      OPTIONS[option].new(link["to"]).run
+    end
   end
 
 end
