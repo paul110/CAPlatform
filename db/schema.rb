@@ -42,10 +42,10 @@ ActiveRecord::Schema.define(version: 20170213212612) do
   end
 
   create_table "sketches", force: :cascade do |t|
-    t.jsonb    "links",        default: "[]", null: false
-    t.jsonb    "boards",       default: "[]", null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.jsonb    "links",        default: [], null: false
+    t.jsonb    "boards",       default: [], null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "draft_id"
     t.datetime "published_at"
     t.datetime "trashed_at"
