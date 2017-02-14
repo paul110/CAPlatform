@@ -1,7 +1,7 @@
 class InputBroadcastJob < ApplicationJob
   queue_as :default
 
-  def perform(data)
-    ActionCable.server.broadcast 'sketch_channel', data
+  def perform data, board
+    CodeRunner.new(board).run
   end
 end
