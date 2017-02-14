@@ -1,14 +1,18 @@
 class SketchChannel < ApplicationCable::Channel
   def subscribed
     stream_from "sketch_channel"
+    if board = Board.find_by(mac: params[:mac])
+      board.update status: "online"
+    end
   end
 
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
+    if board = Board.find_by(mac: params[:mac])
+      board.update status: "offline"
+    end
   end
 
   def blink data
-    # ActionCable.server.broadcast 'sketch_channel', message: data['message']
     InputBroadcastJob.perform_now data
   end
 end

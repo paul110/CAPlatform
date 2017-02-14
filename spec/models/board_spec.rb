@@ -3,14 +3,17 @@
 # Table name: boards
 #
 #  id         :integer          not null, primary key
-#  uid        :string
+#  mac        :string
 #  button     :boolean
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  status     :integer          default("0")
 #
 
 require 'rails_helper'
 
 RSpec.describe Board, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "is valid" do
+    expect(build(:board)).to be_valid
+  end
 end

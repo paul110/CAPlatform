@@ -14,6 +14,10 @@ gem 'puma', '~> 3.0'
 gem 'sidekiq', '~> 4.2.2'
 gem 'redis-namespace'
 gem 'rack-cors', require: 'rack/cors'
+gem 'draftsman', '~> 0.6.0'
+
+# API
+gem 'active_model_serializers', '~> 0.10.0'
 
 # ASSETS
 gem 'turbolinks', '~> 5'
@@ -43,6 +47,7 @@ group :development, :test do
   gem 'pry-remote'
   gem 'factory_girl_rails'
   gem 'ffaker'
+  gem 'simplecov', require: false
 end
 
 group :development do
@@ -52,6 +57,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'better_errors'
+  gem 'awesome_print'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
