@@ -31,7 +31,7 @@ class CodeRunner
     Sketch
       .where("boards @> '[{\"mac\":\"#{mac}\"}]'")
       .where(status: :active)
-      .take
+      .first or raise "Couldn't find active sketch for #{mac}"
   end
 
   def self.find_boards mac, sketch
