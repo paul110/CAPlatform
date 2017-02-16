@@ -3,7 +3,7 @@ module Api
     before_action :find_sketch, only: [:show, :update]
 
     def index
-      @sketches = Sketch.limit 5
+      @sketches = Sketch.order(:id).limit 5
       render json: @sketches, each_serializer: SketchSerializer
     end
 
@@ -41,7 +41,7 @@ module Api
         @sketch.save_draft
       else
         # make the last draft active or just save
-        @sketch.draft.publish!
+        @sketch.draft.publish! if @sketch.draft?
         @sketch.save
       end
     end
