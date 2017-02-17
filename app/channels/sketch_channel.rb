@@ -13,6 +13,8 @@ class SketchChannel < ApplicationCable::Channel
   end
 
   def blink data
-    InputBroadcastJob.perform_now data
+    if board = Board.find_by(mac: params[:mac])
+      InputBroadcastJob.perform_now data, board
+    end
   end
 end
