@@ -20,9 +20,9 @@ module Api
       save_draft_or_activate
       respond_to do |format|
         if @sketch.valid?
-          render json: @sketch, status: :ok
+          format.json { render json: @sketch, status: :ok }
         else
-          render errors: @sketch.errors.full_messages.join(", "), status: :unprocessable_entity
+          format.json { render errors: @sketch.errors.full_messages.join(", "), status: :unprocessable_entity }
         end
       end
     end
@@ -36,7 +36,6 @@ module Api
     def sketch_params
       params.slice(:boards, :links, :status).permit!
     end
-
 
     def save_draft_or_activate
       @sketch.assign_attributes sketch_params
