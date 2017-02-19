@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #  status     :integer          default("0")
 #  metadata   :jsonb            default("{}")
+#  name       :string           default("")
 #
 
 FactoryGirl.define do

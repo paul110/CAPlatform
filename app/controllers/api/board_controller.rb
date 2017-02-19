@@ -8,9 +8,7 @@ module Api
     end
 
     def create
-      @board = Board.first.update board_params
-      ActionCable.server.broadcast 'sketch_channel', message: @board.button
-      render json: @board, status: :created
+      @board = Board.create(board_params)
     end
 
     def show
@@ -20,11 +18,21 @@ module Api
       end
     end
 
+    def update
+      @board = find_board
+      @board.update update_board_params
+      render json: {}, status: :ok
+    end
+
     private
 
+
     def board_params
-      @board.toggle(:button) if params[:button].present?
-      params.permit(:button)
+      params.require(:mac)
+    end
+
+    def update_board_params
+      params.permit(:name, :button)
     end
 
     def find_board
