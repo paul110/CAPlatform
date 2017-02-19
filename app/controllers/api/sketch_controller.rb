@@ -42,8 +42,10 @@ module Api
       if params[:status] == "pending"
         @sketch.save_draft
       else
-        # make the last draft active or just save
-        @sketch.draft.publish!
+        if @sketch.draft?
+          # make the last draft active or just save
+          @sketch.draft.publish!
+        end
         @sketch.save
       end
     end
