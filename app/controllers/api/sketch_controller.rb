@@ -8,6 +8,7 @@ module Api
     end
 
     def show
+      load_boards
       render json: @sketch
     end
 
@@ -26,6 +27,13 @@ module Api
     end
 
     private
+
+    def load_boards
+      boards = Board.where(mac: @sketch.boards.map{ |b| b["mac"] })
+      @sketch.boards.each do |board|
+        board["id"] = boards.detect{ |b| b.mac == board["mac"] }&.id
+      end
+    end
 
     def find_sketch
       @sketch = Sketch.find params.require(:id)
