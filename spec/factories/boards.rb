@@ -7,9 +7,10 @@
 #  button      :boolean
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  status      :integer          default("0")
-#  metadata    :jsonb            default("{}")
+#  status      :integer          default("offline")
+#  metadata    :jsonb
 #  last_active :datetime
+#  name        :string           default("")
 #
 
 FactoryGirl.define do

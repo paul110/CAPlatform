@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20170220132810) do
     t.integer  "status",      default: 0
     t.jsonb    "metadata",    default: {}
     t.datetime "last_active", default: -> { "now()" }
+    t.string   "name",        default: ""
   end
 
   create_table "drafts", force: :cascade do |t|

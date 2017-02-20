@@ -3,7 +3,7 @@ module Api
     before_action :find_sketch, only: [:show, :update]
 
     def index
-      @sketches = Sketch.order(:id).limit 5
+      @sketches = Sketch.order(:id).limit 20
       render json: @sketches, each_serializer: SketchSerializer
     end
 
@@ -13,6 +13,8 @@ module Api
     end
 
     def create
+      @sketch = Sketch.create(sketch_params)
+      render json: @sketch
     end
 
     def update
