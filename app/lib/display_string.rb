@@ -1,6 +1,6 @@
 class DisplayString < CodeRunner
   def run
-    update_board "Hello world! Hello world!"
+    update_board ExternalDatum.first.data.first["title"]
     super
   end
 
