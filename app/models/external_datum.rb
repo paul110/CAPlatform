@@ -1,0 +1,2 @@
+class ExternalDatum < ApplicationRecord
+end
