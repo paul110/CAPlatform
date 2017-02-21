@@ -18,7 +18,8 @@ class SketchSerializer < ActiveModel::Serializer
 
   def boards
     object.boards.each do |board|
-      board["boardConfig"] = BoardSerializer.new(Board.find_by(mac: board["mac"]))
+      next unless b = Board.find_by(mac: board["mac"])
+      board["boardConfig"] = BoardSerializer.new b
     end
   end
 end
