@@ -32,7 +32,7 @@ module Api
     end
 
     def update_board_params
-      params.permit(:name, :button)
+      params.permit(:name, :button, :maintype, :subtype)
     end
 
     def find_board
