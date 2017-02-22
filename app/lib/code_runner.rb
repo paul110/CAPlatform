@@ -5,7 +5,7 @@ class CodeRunner
   OPTIONS = {
     toggle: "Toggle",
     display_string: "DisplayString",
-    link_opener: LinkOpener
+    link_opener: "LinkOpener"
   }
 
   def self.execute_flow board
