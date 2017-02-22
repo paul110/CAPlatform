@@ -15,6 +15,8 @@ gem 'sidekiq', '~> 4.2.2'
 gem 'redis-namespace'
 gem 'rack-cors', require: 'rack/cors'
 gem 'draftsman', '~> 0.6.0'
+gem 'administrate', '~> 0.3.0'
+gem 'bourbon'
 
 # API
 gem 'active_model_serializers', '~> 0.10.0'
