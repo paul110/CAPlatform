@@ -17,7 +17,7 @@ class Toggle < CodeRunner
   end
 
   def update_board value
-    board.update! metadata: { LED_PIN => value }
+    board.update! metadata: { LED_PIN => value, type: "led" }
   end
 
 end
