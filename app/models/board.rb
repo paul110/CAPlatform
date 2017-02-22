@@ -7,8 +7,11 @@
 #  button     :boolean
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  status     :integer          default("0")
-#  metadata   :jsonb            default("{}")
+#  status     :integer          default("offline")
+#  metadata   :jsonb
+#  name       :string           default("")
+#  maintype   :string
+#  subtype    :string
 #
 
 class Board < ApplicationRecord
