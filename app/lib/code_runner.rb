@@ -3,7 +3,8 @@ class CodeRunner
 
   # Map of references to code logic options
   OPTIONS = {
-    toggle: Toggle,
+    toggle: "Toggle",
+    display_string: "DisplayString",
     link_opener: LinkOpener
   }
 
@@ -15,6 +16,7 @@ class CodeRunner
 
   def initialize mac
     @board = Board.find_by(mac: mac) or raise "Board Not Found mac: #{mac}"
+    configure_board
   end
 
   def run
@@ -25,6 +27,9 @@ class CodeRunner
 
   def notify_board
     ActionCable.server.broadcast 'sketch_channel', message: board.metadata
+  end
+
+  def configure_board
   end
 
   def self.find_sketch mac
@@ -43,7 +48,7 @@ class CodeRunner
     boards_to_update.each do |link|
       option = link["logic"].to_sym
       raise "Option not found" unless OPTIONS[option]
-      OPTIONS[option].new(link["to"]).run
+      OPTIONS[option].constantize.new(link["to"]).run
     end
   end
 

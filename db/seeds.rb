@@ -1,5 +1,7 @@
 Board.create! mac: "1234"
 Board.create! mac: "5678"
+
+ExternalDatum.create! source_type: 0, name: 'NY Times', url: '', data: [{href: '', title: 'First headline'}]
 Board.create! mac: "MacOS|Chrome|56.0.2924.87"
 
 Sketch.create! links: [{from: '1234', to: '5678', logic: 'toggle'}],

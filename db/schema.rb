@@ -46,6 +46,15 @@ ActiveRecord::Schema.define(version: 20170221110545) do
     t.index ["whodunnit"], name: "index_drafts_on_whodunnit", using: :btree
   end
 
+  create_table "external_data", force: :cascade do |t|
+    t.integer  "source_type"
+    t.jsonb    "data"
+    t.string   "name"
+    t.string   "url"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "sketches", force: :cascade do |t|
     t.jsonb    "links",        default: [], null: false
     t.jsonb    "boards",       default: [], null: false
