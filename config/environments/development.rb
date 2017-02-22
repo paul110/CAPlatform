@@ -9,6 +9,8 @@ Rails.application.configure do
   config.middleware.use SketchActionCable
   config.web_socket_server_url = "wss://localhost:3000/cable"
 
+  config.action_cable.allowed_request_origins = [ 'http://localhost:4200' ]
+
   # Do not eager load code on boot.
   config.eager_load = false
 

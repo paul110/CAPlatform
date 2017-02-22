@@ -3,15 +3,18 @@ module Api
     before_action :find_sketch, only: [:show, :update]
 
     def index
-      @sketches = Sketch.order(:id).limit 5
+      @sketches = Sketch.order(:id).limit 20
       render json: @sketches, each_serializer: SketchSerializer
     end
 
     def show
+      load_boards
       render json: @sketch
     end
 
     def create
+      @sketch = Sketch.create(sketch_params)
+      render json: @sketch
     end
 
     def update
@@ -26,6 +29,13 @@ module Api
     end
 
     private
+
+    def load_boards
+      boards = Board.where(mac: @sketch.boards.map{ |b| b["mac"] })
+      @sketch.boards.each do |board|
+        board["id"] = boards.detect{ |b| b.mac == board["mac"] }&.id
+      end
+    end
 
     def find_sketch
       @sketch = Sketch.find params.require(:id)

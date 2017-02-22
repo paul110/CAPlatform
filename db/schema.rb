@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220123601) do
+ActiveRecord::Schema.define(version: 20170221110545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,10 +18,14 @@ ActiveRecord::Schema.define(version: 20170220123601) do
   create_table "boards", force: :cascade do |t|
     t.string   "mac"
     t.boolean  "button"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "status",     default: 0
-    t.jsonb    "metadata",   default: {}
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.integer  "status",      default: 0
+    t.jsonb    "metadata",    default: {}
+    t.datetime "last_active", default: -> { "now()" }
+    t.string   "name",        default: ""
+    t.string   "maintype"
+    t.string   "subtype"
   end
 
   create_table "drafts", force: :cascade do |t|

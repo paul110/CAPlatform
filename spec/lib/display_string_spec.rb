@@ -7,10 +7,6 @@ RSpec.describe DisplayString do
   subject { DisplayString }
 
   describe "new" do
-    # before do
-    #   allow(Toggle).to receive(:new).and_return(run_double)
-    # end
-
     it 'initializes and configures one board' do
       subject.new board1.mac
       board_metadata = board1.reload.metadata
@@ -20,30 +16,39 @@ RSpec.describe DisplayString do
   end
 
   describe "run" do
-    before do
-      @subjectBoard = subject.new board1.mac
-      @currentIndex = board1.reload.metadata.dig("id")
-    end
-    it 'updates the metadata with the next headline' do
+    let(:subject_board) { subject.new board1.mac }
 
-      @subjectBoard.run
+    before do
+      allow(ActionCable.server).to receive(:broadcast).and_return true
+    end
+
+    it 'updates the metadata with the next headline' do
+      current_index = board1.metadata.dig("id").to_i
+      subject_board.run
       board_metadata = board1.reload.metadata
 
-      expect_metadata_to_eq board_metadata, 'lcd_display', @currentIndex + 1, externalDatum.data.dig(@currentIndex + 1, "title")
+      expect_metadata_to_eq board_metadata, 'lcd_display', current_index + 1, externalDatum.data.dig(current_index + 1, "title")
     end
 
     it 'goes to first headline after reading all headlines' do
       externalDatum.data.length.times do
-        @subjectBoard.run
+        subject_board.run
       end
 
       board_metadata = board1.reload.metadata
 
       expect_metadata_to_eq board_metadata, 'lcd_display', 0, externalDatum.data.dig(0, "title")
     end
+
+    it "broadcasts the message" do
+      subject_board.run
+
+      expect(ActionCable.server).to have_received(:broadcast).with("sketch_channel", message: board1.reload.metadata)
+    end
   end
 
-  private 
+  private
+
   def expect_metadata_to_eq board_metadata, type, id, value
     expect(board_metadata.dig("type")).to eq type
     expect(board_metadata.dig("id")).to eq id

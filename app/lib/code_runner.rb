@@ -4,7 +4,8 @@ class CodeRunner
   # Map of references to code logic options
   OPTIONS = {
     toggle: "Toggle",
-    display_string: "DisplayString"
+    display_string: "DisplayString",
+    link_opener: LinkOpener
   }
 
   def self.execute_flow board
