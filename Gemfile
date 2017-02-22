@@ -35,6 +35,7 @@ gem 'capistrano', '3.4.1'
 gem 'capistrano-bower'
 
 # MISC
+gem 'faraday', '~> 0.11.0'
 gem 'aws-sdk', '~> 2.3.0'
 gem 'rails_12factor', group: :production
 

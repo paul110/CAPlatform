@@ -17,5 +17,4 @@ class DisplayString < CodeRunner
     board.update! metadata: { type: 'lcd_display', value: value, id: id}
   end
 
-
 end
