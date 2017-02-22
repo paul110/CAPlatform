@@ -53,6 +53,7 @@ module Api
         # make the last draft active or just save
         @sketch.draft.publish! if @sketch.draft?
         @sketch.save
+        CodeRunner.configure_sketch @sketch.id
       end
     end
   end

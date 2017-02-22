@@ -8,7 +8,7 @@ RSpec.describe DisplayString do
 
   describe "new" do
     it 'initializes and configures one board' do
-      subject.new board1.mac
+      subject.new(board1.mac).configure_board
       board_metadata = board1.reload.metadata
 
       expect_metadata_to_eq board_metadata, 'lcd_display', 0, externalDatum.data.dig(0, "title")

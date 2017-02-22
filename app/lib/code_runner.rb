@@ -14,22 +14,35 @@ class CodeRunner
     update_boards boards_to_update
   end
 
+  def self.configure_sketch sketch_id
+    links = links_to_configure sketch_id
+    links.each do |link|
+      OPTIONS[link[:logic]].constantize.new(link[:board]).configure_board
+    end
+  end
+
   def initialize mac
     @board = Board.find_by(mac: mac) or raise "Board Not Found mac: #{mac}"
-    configure_board
   end
 
   def run
     notify_board
   end
 
+  def configure_board
+  end
+
   private
+
+  def links_to_configure sketch_id
+    Sketch
+      .find(sketch_id)
+      .links
+      .map{ |link| { logic: link["logic"], mac: link["to"] } }
+  end
 
   def notify_board
     ActionCable.server.broadcast 'sketch_channel', message: board.metadata
-  end
-
-  def configure_board
   end
 
   def self.find_sketch mac
