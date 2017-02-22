@@ -17,6 +17,7 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'draftsman', '~> 0.6.0'
 gem 'administrate', '~> 0.3.0'
 gem 'bourbon'
+gem 'binding_of_caller'
 
 # API
 gem 'active_model_serializers', '~> 0.10.0'
