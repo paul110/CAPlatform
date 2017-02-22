@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220132810) do
+ActiveRecord::Schema.define(version: 20170221110545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20170220132810) do
     t.jsonb    "metadata",    default: {}
     t.datetime "last_active", default: -> { "now()" }
     t.string   "name",        default: ""
+    t.string   "maintype"
+    t.string   "subtype"
   end
 
   create_table "drafts", force: :cascade do |t|

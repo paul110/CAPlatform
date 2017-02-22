@@ -11,6 +11,8 @@
 #  metadata    :jsonb
 #  last_active :datetime
 #  name        :string           default("")
+#  maintype    :string
+#  subtype     :string
 #
 
 FactoryGirl.define do
