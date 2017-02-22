@@ -9,10 +9,10 @@
 #  url         :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#
+
 
 class ExternalDatum < ApplicationRecord
   enum source_type: {
-    ny_times: 0
+    cnn: 0
   }
 end
