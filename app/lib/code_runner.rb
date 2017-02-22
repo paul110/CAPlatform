@@ -3,7 +3,8 @@ class CodeRunner
 
   # Map of references to code logic options
   OPTIONS = {
-    toggle: Toggle
+    toggle: Toggle,
+    link_opener: LinkOpener
   }
 
   def self.execute_flow board

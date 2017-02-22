@@ -15,4 +15,11 @@
 
 class SketchSerializer < ActiveModel::Serializer
   attributes :id, :links, :boards, :status
+
+  def boards
+    object.boards.each do |board|
+      next unless b = Board.find_by(mac: board["mac"])
+      board["boardConfig"] = BoardSerializer.new b
+    end
+  end
 end
