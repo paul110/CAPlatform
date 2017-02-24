@@ -25,13 +25,14 @@ RSpec.describe Api::SketchController, type: :controller do
 
     it "publishes the draft" do
       # Create a Draft
-      put :update, params: sketch_params(logic: "blah")
+      put :update, params: sketch_params(logic: "display_string")
+
       sketch.reload
       # Publish the draft
-      put :update, params: sketch_params(logic: "custom_one", status: "active")
+      put :update, params: sketch_params(logic: "toggle", status: "active")
 
       expect(sketch.reload.draft?).to be false
-      expect(sketch.links.dig(0, "logic")).to eq "custom_one"
+      expect(sketch.links.dig(0, "logic")).to eq "toggle"
     end
   end
 

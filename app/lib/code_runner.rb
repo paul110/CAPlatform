@@ -15,9 +15,11 @@ class CodeRunner
   end
 
   def self.configure_sketch sketch_id
-    links = links_to_configure sketch_id
+    links = self.links_to_configure sketch_id
     links.each do |link|
-      OPTIONS[link[:logic]].constantize.new(link[:board]).configure_board
+      option = link[:logic].to_sym
+      raise "Option #{option} not found" unless OPTIONS[option]
+      OPTIONS[option].constantize.new(link[:board]).configure_board
     end
   end
 
@@ -34,7 +36,7 @@ class CodeRunner
 
   private
 
-  def links_to_configure sketch_id
+  def self.links_to_configure sketch_id
     Sketch
       .find(sketch_id)
       .links
@@ -60,7 +62,7 @@ class CodeRunner
   def self.update_boards boards_to_update
     boards_to_update.each do |link|
       option = link["logic"].to_sym
-      raise "Option not found" unless OPTIONS[option]
+      raise "Option #{option} not found" unless OPTIONS[option]
       OPTIONS[option].constantize.new(link["to"]).run
     end
   end
