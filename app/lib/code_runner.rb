@@ -6,7 +6,7 @@ class CodeRunner
     toggle: "Toggle",
     display_string: "DisplayString",
     link_opener: "LinkOpener"
-  }
+  }.freeze
 
   def self.execute_flow board
     sketch = find_sketch board.mac
