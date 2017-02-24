@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221110545) do
+ActiveRecord::Schema.define(version: 20170224164405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,24 +28,6 @@ ActiveRecord::Schema.define(version: 20170221110545) do
     t.string   "subtype"
   end
 
-  create_table "drafts", force: :cascade do |t|
-    t.string   "item_type",      null: false
-    t.integer  "item_id",        null: false
-    t.string   "event",          null: false
-    t.string   "whodunnit"
-    t.json     "object"
-    t.json     "previous_draft"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.text     "object_changes"
-    t.index ["created_at"], name: "index_drafts_on_created_at", using: :btree
-    t.index ["event"], name: "index_drafts_on_event", using: :btree
-    t.index ["item_id"], name: "index_drafts_on_item_id", using: :btree
-    t.index ["item_type"], name: "index_drafts_on_item_type", using: :btree
-    t.index ["updated_at"], name: "index_drafts_on_updated_at", using: :btree
-    t.index ["whodunnit"], name: "index_drafts_on_whodunnit", using: :btree
-  end
-
   create_table "external_data", force: :cascade do |t|
     t.integer  "source_type"
     t.jsonb    "data"
@@ -60,7 +42,6 @@ ActiveRecord::Schema.define(version: 20170221110545) do
     t.jsonb    "boards",       default: [], null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.integer  "draft_id"
     t.datetime "published_at"
     t.datetime "trashed_at"
     t.integer  "status",       default: 0

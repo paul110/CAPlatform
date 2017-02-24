@@ -19,6 +19,7 @@ class CodeRunner
     links.each do |link|
       option = link[:logic].to_sym
       raise "Option #{option} not found" unless OPTIONS[option]
+      binding.pry
       OPTIONS[option].constantize.new(link[:board]).configure_board
     end
   end

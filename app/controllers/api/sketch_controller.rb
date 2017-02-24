@@ -8,7 +8,6 @@ module Api
     end
 
     def show
-      load_boards
       render json: @sketch
     end
 
@@ -18,9 +17,10 @@ module Api
     end
 
     def update
-      save_draft_or_activate
+      @sketch.update sketch_params
       respond_to do |format|
         if @sketch.valid?
+          # CodeRunner.configure_sketch @sketch.id
           format.json { render json: @sketch, status: :ok }
         else
           format.json { render errors: @sketch.errors.full_messages.join(", "), status: :unprocessable_entity }
@@ -30,13 +30,6 @@ module Api
 
     private
 
-    def load_boards
-      boards = Board.where(mac: @sketch.boards.map{ |b| b["mac"] })
-      @sketch.boards.each do |board|
-        board["id"] = boards.detect{ |b| b.mac == board["mac"] }&.id
-      end
-    end
-
     def find_sketch
       @sketch = Sketch.find params.require(:id)
     end
@@ -45,16 +38,5 @@ module Api
       params.slice(:boards, :links, :status).permit!
     end
 
-    def save_draft_or_activate
-      @sketch.assign_attributes sketch_params
-      if params[:status] == "pending"
-        @sketch.save_draft
-      else
-        # make the last draft active or just save
-        @sketch.draft.publish! if @sketch.draft?
-        @sketch.save
-        CodeRunner.configure_sketch @sketch.id
-      end
-    end
   end
 end
