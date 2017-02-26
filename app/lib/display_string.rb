@@ -6,11 +6,6 @@ class DisplayString < CodeRunner
     super
   end
 
-  def configure_board
-    update_board ExternalDatum.first.data.first['title'], 0
-    super
-  end
-
   private
 
   def update_board value, id

@@ -18,18 +18,6 @@ class CodeRunner
     update_boards boards_to_update
   end
 
-  def self.configure_sketch sketch_id
-    links = self.links_to_configure sketch_id
-    before_links, after_links = self.inspect_links links
-    before_links.each do |link|
-      option = link[:logic].to_sym
-      AFTER_HOOKS[option].constantize.new(link[:board]).configure_board
-    end
-    after_links.each do |link|
-      option = link[:logic].to_sym
-      AFTER_HOOKS[option].constantize.new(link[:board]).configure_board
-    end
-  end
 
   def initialize mac
     @board = Board.find_by(mac: mac) or raise "Board Not Found mac: #{mac}"
@@ -39,17 +27,8 @@ class CodeRunner
     notify_board
   end
 
-  def configure_board
-  end
 
   private
-
-  def self.links_to_configure sketch_id
-    Sketch
-      .find(sketch_id)
-      .links
-      .map{ |link| { logic: link["logic"], mac: link["to"] } }
-  end
 
   def self.inspect_links links
     before_links = []
