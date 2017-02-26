@@ -19,7 +19,7 @@ class CodeRunner
   end
 
 
-  def initialize mac
+  def initialize mac, link: {}
     @board = Board.find_by(mac: mac) or raise "Board Not Found mac: #{mac}"
   end
 
@@ -69,7 +69,7 @@ class CodeRunner
     before_links.each do |link|
       option = link["logic"].to_sym
       raise "Option #{option} not found" unless AFTER_HOOKS[option]
-      AFTER_HOOKS[option].constantize.new(link["from"]).run
+      AFTER_HOOKS[option].constantize.new(link["from"], link: link).run
     end
     after_links.each do |link|
       option = link["logic"].to_sym
