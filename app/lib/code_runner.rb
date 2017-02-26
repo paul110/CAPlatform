@@ -2,7 +2,11 @@ class CodeRunner
   attr_accessor :board
 
   # Map of references to code logic options
-  OPTIONS = {
+  BEFORE_HOOKS = {
+    sync_data: "SyncData"
+  }.freeze
+
+  AFTER_HOOKS = {
     toggle: "Toggle",
     display_string: "DisplayString",
     link_opener: "LinkOpener"
@@ -16,11 +20,14 @@ class CodeRunner
 
   def self.configure_sketch sketch_id
     links = self.links_to_configure sketch_id
-    links.each do |link|
+    before_links, after_links = self.inspect_links links
+    before_links.each do |link|
       option = link[:logic].to_sym
-      raise "Option #{option} not found" unless OPTIONS[option]
-      binding.pry
-      OPTIONS[option].constantize.new(link[:board]).configure_board
+      AFTER_HOOKS[option].constantize.new(link[:board]).configure_board
+    end
+    after_links.each do |link|
+      option = link[:logic].to_sym
+      AFTER_HOOKS[option].constantize.new(link[:board]).configure_board
     end
   end
 
@@ -44,6 +51,23 @@ class CodeRunner
       .map{ |link| { logic: link["logic"], mac: link["to"] } }
   end
 
+  def self.inspect_links links
+    before_links = []
+    after_links = []
+    links.each do |link|
+      option = link[:logic].to_sym
+      if BEFORE_HOOKS[option]
+        before_links.push link
+      elsif AFTER_HOOKS[option]
+        after_links.push link
+      else
+        raise "Option #{option} not found"
+      end
+    end
+
+    return before_links, after_links
+  end
+
   def notify_board
     ActionCable.server.broadcast 'sketch_channel', message: board.metadata
   end
@@ -61,10 +85,17 @@ class CodeRunner
   end
 
   def self.update_boards boards_to_update
-    boards_to_update.each do |link|
+    before_links, after_links = self.inspect_links boards_to_update
+
+    before_links.each do |link|
       option = link["logic"].to_sym
-      raise "Option #{option} not found" unless OPTIONS[option]
-      OPTIONS[option].constantize.new(link["to"]).run
+      raise "Option #{option} not found" unless AFTER_HOOKS[option]
+      AFTER_HOOKS[option].constantize.new(link["from"]).run
+    end
+    after_links.each do |link|
+      option = link["logic"].to_sym
+      raise "Option #{option} not found" unless AFTER_HOOKS[option]
+      AFTER_HOOKS[option].constantize.new(link["to"]).run
     end
   end
 
