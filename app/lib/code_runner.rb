@@ -16,6 +16,7 @@ class CodeRunner
     sketch = find_sketch board.mac
     before_links = find_boards board.mac, sketch, key: 'to'
     update_boards links: before_links, option_hooks: BEFORE_HOOKS, parent_board: board
+    board.reload
     after_links = find_boards board.mac, sketch, key: 'from'
     update_boards links: after_links, option_hooks: AFTER_HOOKS, parent_board: board
   end
@@ -54,10 +55,10 @@ class CodeRunner
       option = link["logic"].to_sym
       raise "Option #{option} not found" unless option_hooks[option]
       case option_hooks
-      when AFTER_HOOKS
-        option_hooks[option].constantize.new(link['to']).run Board.find_by(mac: link['from'])
       when BEFORE_HOOKS
-        option_hooks[option].constantize.new(link['from']).run parent_board
+        option_hooks[option].constantize.new(link['to']).run Board.find_by mac: link['from']
+      when AFTER_HOOKS
+        option_hooks[option].constantize.new(link['to']).run parent_board
       else
       end
     end
