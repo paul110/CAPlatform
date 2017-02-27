@@ -14,7 +14,10 @@ class CodeRunner
 
   def self.execute_flow board
     sketch = find_sketch board.mac
-    boards_to_update = find_boards board.mac, sketch
+    before_links = find_boards board.mac, sketch, key: 'to'
+    update_boards before_links, option_hooks: BEFORE_HOOKS, key: 'from'
+
+    boards_to_update = find_boards board.mac, sketch, key: 'from'
     update_boards boards_to_update
   end
 
@@ -34,7 +37,7 @@ class CodeRunner
     before_links = []
     after_links = []
     links.each do |link|
-      option = link[:logic].to_sym
+      option = link['logic'].to_sym
       if BEFORE_HOOKS[option]
         before_links.push link
       elsif AFTER_HOOKS[option]
@@ -43,7 +46,6 @@ class CodeRunner
         raise "Option #{option} not found"
       end
     end
-
     return before_links, after_links
   end
 
@@ -59,23 +61,23 @@ class CodeRunner
       .first or raise "Couldn't find active sketch for #{mac}"
   end
 
-  def self.find_boards mac, sketch
-    sketch.links.select{ |l| l["from"] == mac }
+  def self.find_boards mac, sketch, key: "from"
+    sketch.links.select{ |l| l[key] == mac }
   end
 
-  def self.update_boards boards_to_update
-    before_links, after_links = self.inspect_links boards_to_update
+  def self.update_boards boards_to_update, option_hooks: AFTER_HOOKS, key: 'to'
+    # before_links, after_links = self.inspect_links boards_to_update
 
-    before_links.each do |link|
+    boards_to_update.each do |link|
       option = link["logic"].to_sym
-      raise "Option #{option} not found" unless AFTER_HOOKS[option]
-      AFTER_HOOKS[option].constantize.new(link["from"], link: link).run
+      raise "Option #{option} not found" unless option_hooks[option]
+      option_hooks[option].constantize.new(link[key], link: link).run
     end
-    after_links.each do |link|
-      option = link["logic"].to_sym
-      raise "Option #{option} not found" unless AFTER_HOOKS[option]
-      AFTER_HOOKS[option].constantize.new(link["to"]).run
-    end
+    # after_links.each do |link|
+    #   option = link["logic"].to_sym
+    #   raise "Option #{option} not found" unless AFTER_HOOKS[option]
+    #   AFTER_HOOKS[option].constantize.new(link["to"]).run
+    # end
   end
 
 end
