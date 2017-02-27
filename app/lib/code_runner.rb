@@ -16,7 +16,6 @@ class CodeRunner
     sketch = find_sketch board.mac
     before_links = find_boards board.mac, sketch, key: 'to'
     update_boards links: before_links, option_hooks: BEFORE_HOOKS, parent_board: board
-
     after_links = find_boards board.mac, sketch, key: 'from'
     update_boards links: after_links, option_hooks: AFTER_HOOKS, parent_board: board
   end
