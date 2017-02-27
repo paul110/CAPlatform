@@ -55,7 +55,7 @@ class CodeRunner
       raise "Option #{option} not found" unless option_hooks[option]
       case option_hooks
       when AFTER_HOOKS
-        option_hooks[option].constantize.new(link['to']).run parent_board
+        option_hooks[option].constantize.new(link['to']).run Board.find_by(mac: link['from'])
       when BEFORE_HOOKS
         option_hooks[option].constantize.new(link['from']).run parent_board
       else
