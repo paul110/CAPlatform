@@ -34,7 +34,7 @@ RSpec.describe CodeRunner do
       subject.execute_flow button
 
       expect(Toggle).to have_received(:new).with(led.mac)
-      expect(SyncData).to have_received(:new).with(source_data.mac, link: links().first.stringify_keys)
+      expect(SyncData).to have_received(:new).with(source_data.mac)
       expect(LinkOpener).to have_received(:new).with(preipheral.mac)
     end
 

@@ -8,20 +8,12 @@ RSpec.describe SyncData do
   subject { SyncData }
 
   describe 'run' do
-    let!(:sync_data_coderunner) { subject.new(board1.mac, link: link) }
-    it 'initializes the coderunner with mac and link' do
-      expect(sync_data_coderunner.sync_from).to eq board2
-    end
+    let!(:sync_data_coderunner) { subject.new(board1.mac) }
 
     it 'updates the metadata from board1 with metadata from board2' do
-      expect(board1.metadata).to eq({})
-      sync_data_coderunner.run
+      sync_data_coderunner.run board2
       board1.reload
       expect(board1.metadata).to eq board2.metadata
-    end
-
-    it 'throws error if no link is provided' do
-      expect{ subject.new(board1.mac)}.to raise_error "SyncData requires a board link as a parameter"
     end
   end
 
