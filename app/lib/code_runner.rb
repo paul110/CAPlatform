@@ -22,11 +22,11 @@ class CodeRunner
   end
 
 
-  def initialize mac, link: {}
+  def initialize mac
     @board = Board.find_by(mac: mac) or raise "Board Not Found mac: #{mac}"
   end
 
-  def run
+  def run parent_board
     notify_board
   end
 
@@ -55,10 +55,10 @@ class CodeRunner
       raise "Option #{option} not found" unless option_hooks[option]
       case option_hooks
       when AFTER_HOOKS
-        option_hooks[option].constantize.new(link['to']).run
+        option_hooks[option].constantize.new(link['to']).run @board
       when BEFORE_HOOKS
         # binding.pry
-        option_hooks[option].constantize.new(link['from'], link: link).run
+        option_hooks[option].constantize.new(link['from']).run @board
       else
       end
     end
