@@ -13,27 +13,6 @@ RSpec.describe Api::SketchController, type: :controller do
       expect(json_response.dig("links", 0, "logic")).to eq "custom_one"
     end
 
-    it "saves the update as a draft" do
-      put :update, params: sketch_params(logic: "custom_one")
-
-      expect(sketch.reload.draft?).to be true
-      # Saved logic should be "toggle"
-      expect(sketch.links.dig(0, "logic")).to eq "toggle"
-      # Draft sketch should have "custom_one"
-      expect(sketch.draft.object.dig("links", 0, "logic")).to eq "custom_one"
-    end
-
-    it "publishes the draft" do
-      # Create a Draft
-      put :update, params: sketch_params(logic: "display_string")
-
-      sketch.reload
-      # Publish the draft
-      put :update, params: sketch_params(logic: "toggle", status: "active")
-
-      expect(sketch.reload.draft?).to be false
-      expect(sketch.links.dig(0, "logic")).to eq "toggle"
-    end
   end
 
   private

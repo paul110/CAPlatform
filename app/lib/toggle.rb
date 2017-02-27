@@ -1,7 +1,7 @@
 class Toggle < CodeRunner
   LED_PIN = 13.to_s
 
-  def run
+  def run parent_board
     if current_value.zero?
       update_board 1
     else

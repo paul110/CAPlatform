@@ -20,7 +20,6 @@ module Api
       @sketch.update sketch_params
       respond_to do |format|
         if @sketch.valid?
-          # CodeRunner.configure_sketch @sketch.id
           format.json { render json: @sketch, status: :ok }
         else
           format.json { render errors: @sketch.errors.full_messages.join(", "), status: :unprocessable_entity }

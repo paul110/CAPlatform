@@ -2,7 +2,11 @@ class CodeRunner
   attr_accessor :board
 
   # Map of references to code logic options
-  OPTIONS = {
+  BEFORE_HOOKS = {
+    sync_data: "SyncData"
+  }.freeze
+
+  AFTER_HOOKS = {
     toggle: "Toggle",
     display_string: "DisplayString",
     link_opener: "LinkOpener"
@@ -10,38 +14,23 @@ class CodeRunner
 
   def self.execute_flow board
     sketch = find_sketch board.mac
-    boards_to_update = find_boards board.mac, sketch
-    update_boards boards_to_update
+    before_links = find_boards board.mac, sketch, key: 'to'
+    update_boards before_links, option_hooks: BEFORE_HOOKS
+    after_links = find_boards board.mac, sketch, key: 'from'
+    update_boards after_links, option_hooks: AFTER_HOOKS
   end
 
-  def self.configure_sketch sketch_id
-    links = self.links_to_configure sketch_id
-    links.each do |link|
-      option = link[:logic].to_sym
-      raise "Option #{option} not found" unless OPTIONS[option]
-      OPTIONS[option].constantize.new(link[:board]).configure_board
-    end
-  end
 
   def initialize mac
     @board = Board.find_by(mac: mac) or raise "Board Not Found mac: #{mac}"
   end
 
-  def run
+  def run parent_board
     notify_board
   end
 
-  def configure_board
-  end
 
   private
-
-  def self.links_to_configure sketch_id
-    Sketch
-      .find(sketch_id)
-      .links
-      .map{ |link| { logic: link["logic"], mac: link["to"] } }
-  end
 
   def notify_board
     ActionCable.server.broadcast 'sketch_channel', message: board.metadata
@@ -55,15 +44,22 @@ class CodeRunner
       .first or raise "Couldn't find active sketch for #{mac}"
   end
 
-  def self.find_boards mac, sketch
-    sketch.links.select{ |l| l["from"] == mac }
+  def self.find_boards mac, sketch, key: "from"
+    sketch.links.select{ |l| l[key] == mac }
   end
 
-  def self.update_boards boards_to_update
+  def self.update_boards boards_to_update, option_hooks: AFTER_HOOKS
     boards_to_update.each do |link|
       option = link["logic"].to_sym
-      raise "Option #{option} not found" unless OPTIONS[option]
-      OPTIONS[option].constantize.new(link["to"]).run
+      raise "Option #{option} not found" unless option_hooks[option]
+      case option_hooks
+      when AFTER_HOOKS
+        option_hooks[option].constantize.new(link['to']).run @board
+      when BEFORE_HOOKS
+        # binding.pry
+        option_hooks[option].constantize.new(link['from']).run @board
+      else
+      end
     end
   end
 
