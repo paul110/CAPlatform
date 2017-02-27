@@ -15,10 +15,10 @@ class CodeRunner
   def self.execute_flow board
     sketch = find_sketch board.mac
     before_links = find_boards board.mac, sketch, key: 'to'
-    update_boards before_links, option_hooks: BEFORE_HOOKS, key: 'from'
+    update_boards before_links, option_hooks: BEFORE_HOOKS
 
     boards_to_update = find_boards board.mac, sketch, key: 'from'
-    update_boards boards_to_update
+    update_boards boards_to_update, option_hooks: AFTER_HOOKS
   end
 
 
@@ -32,22 +32,6 @@ class CodeRunner
 
 
   private
-
-  def self.inspect_links links
-    before_links = []
-    after_links = []
-    links.each do |link|
-      option = link['logic'].to_sym
-      if BEFORE_HOOKS[option]
-        before_links.push link
-      elsif AFTER_HOOKS[option]
-        after_links.push link
-      else
-        raise "Option #{option} not found"
-      end
-    end
-    return before_links, after_links
-  end
 
   def notify_board
     ActionCable.server.broadcast 'sketch_channel', message: board.metadata
@@ -65,19 +49,19 @@ class CodeRunner
     sketch.links.select{ |l| l[key] == mac }
   end
 
-  def self.update_boards boards_to_update, option_hooks: AFTER_HOOKS, key: 'to'
-    # before_links, after_links = self.inspect_links boards_to_update
-
+  def self.update_boards boards_to_update, option_hooks: AFTER_HOOKS
     boards_to_update.each do |link|
       option = link["logic"].to_sym
       raise "Option #{option} not found" unless option_hooks[option]
-      option_hooks[option].constantize.new(link[key], link: link).run
+      case option_hooks
+      when AFTER_HOOKS
+        option_hooks[option].constantize.new(link['to']).run
+      when BEFORE_HOOKS
+        # binding.pry
+        option_hooks[option].constantize.new(link['from'], link: link).run
+      else
+      end
     end
-    # after_links.each do |link|
-    #   option = link["logic"].to_sym
-    #   raise "Option #{option} not found" unless AFTER_HOOKS[option]
-    #   AFTER_HOOKS[option].constantize.new(link["to"]).run
-    # end
   end
 
 end
