@@ -15,10 +15,10 @@ class CodeRunner
   def self.execute_flow board
     sketch = find_sketch board.mac
     before_links = find_boards board.mac, sketch, key: 'to'
-    update_boards before_links, option_hooks: BEFORE_HOOKS
+    update_boards links: before_links, option_hooks: BEFORE_HOOKS, parent_board: board
 
     after_links = find_boards board.mac, sketch, key: 'from'
-    update_boards after_links, option_hooks: AFTER_HOOKS
+    update_boards links: after_links, option_hooks: AFTER_HOOKS, parent_board: board
   end
 
 
@@ -49,16 +49,16 @@ class CodeRunner
     sketch.links.select{ |l| l[key] == mac }
   end
 
-  def self.update_boards boards_to_update, option_hooks: AFTER_HOOKS
-    boards_to_update.each do |link|
+  def self.update_boards links: {}, option_hooks: AFTER_HOOKS, parent_board: nil
+    raise "No parent board provided" if parent_board.nil?
+    links.each do |link|
       option = link["logic"].to_sym
       raise "Option #{option} not found" unless option_hooks[option]
       case option_hooks
       when AFTER_HOOKS
-        option_hooks[option].constantize.new(link['to']).run @board
+        option_hooks[option].constantize.new(link['to']).run parent_board
       when BEFORE_HOOKS
-        # binding.pry
-        option_hooks[option].constantize.new(link['from']).run @board
+        option_hooks[option].constantize.new(link['from']).run parent_board
       else
       end
     end
