@@ -15,8 +15,7 @@
 class Sketch < ApplicationRecord
 
   enum status: {
-    pending: 0,
+    closed: 0,
     active: 1,
-    closed: 2
   }
 end
