@@ -3,13 +3,13 @@ class CodeRunner
 
   # Map of references to code logic options
   BEFORE_HOOKS = {
-    sync_data: "SyncData"
+    sync_data: "Synchronise data between devices"
   }.freeze
 
   AFTER_HOOKS = {
-    toggle: "Toggle",
-    display_string: "DisplayString",
-    link_opener: "LinkOpener"
+    toggle: "Flip the value between on and off",
+    display_string: "Print a string to the LCD",
+    link_opener: "Open an url on the Laptop peripheral"
   }.freeze
 
   def self.execute_flow board
@@ -53,12 +53,13 @@ class CodeRunner
     raise "No parent board provided" if parent_board.nil?
     links.each do |link|
       option = link["logic"].to_sym
-      raise "Option #{option} not found" unless option_hooks[option]
+      raise "Option #{option} not found" unless option_hooks.has_key?(option)
+      klass = option.to_s.camelize.constantize
       case option_hooks
       when BEFORE_HOOKS
-        option_hooks[option].constantize.new(link['to']).run Board.find_by mac: link['from']
+        klass.new(link['to']).run Board.find_by mac: link['from']
       when AFTER_HOOKS
-        option_hooks[option].constantize.new(link['to']).run parent_board
+        klass.new(link['to']).run parent_board
       else
       end
     end
