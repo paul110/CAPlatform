@@ -7,7 +7,7 @@ class SyncData < CodeRunner
   private
 
   def update_board new_metadata
-    @board.update! metadata: new_metadata
+    board.update! metadata: new_metadata
   end
 
 end
