@@ -22,7 +22,7 @@ RSpec.describe Api::SketchController, type: :controller do
       id: sketch.id,
       boards: boards(params),
       links: links(params),
-      status: params.fetch(:status, "pending"),
+      status: params.fetch(:status, "active"),
       format: params.fetch(:format, :json)
     }
   end
