@@ -1,6 +1,6 @@
 module Api
   class SketchController < BaseController
-    before_action :find_sketch, only: [:show, :update]
+    before_action :find_sketch, only: [:show, :update, :destroy]
 
     def index
       @sketches = Sketch.order(:id).limit 20
@@ -25,6 +25,11 @@ module Api
           format.json { render errors: @sketch.errors.full_messages.join(", "), status: :unprocessable_entity }
         end
       end
+    end
+
+    def destroy
+      @sketch.destroy
+      head :no_content
     end
 
     private
