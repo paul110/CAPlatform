@@ -10,7 +10,6 @@ class BoardDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     mac: Field::String,
-    button: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     status: Field::String.with_options(searchable: false),
@@ -29,8 +28,8 @@ class BoardDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :id,
     :mac,
-    :button,
-    :created_at,
+    :name,
+    :maintype
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -38,7 +37,6 @@ class BoardDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :id,
     :mac,
-    :button,
     :created_at,
     :updated_at,
     :status,
@@ -54,7 +52,6 @@ class BoardDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :mac,
-    :button,
     :status,
     :metadata,
     :last_active,
@@ -66,7 +63,7 @@ class BoardDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how boards are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(board)
-  #   "Board ##{board.id}"
-  # end
+  def display_resource(board)
+    "Board<#{board.name}> Mac: #{board.mac}"
+  end
 end
