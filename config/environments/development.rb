@@ -6,7 +6,6 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
-  config.middleware.use SketchActionCable
   config.web_socket_server_url = "wss://localhost:3000/cable"
 
   config.action_cable.allowed_request_origins = [ 'http://localhost:4200' ]
