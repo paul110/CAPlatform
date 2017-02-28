@@ -22,7 +22,7 @@ module TestHeroku
       allow do
         # to be decided later
         origins 'localhost:8000', 'localhost:4200'
-        resource '*', headers: :any, methods: [:post, :options, :put]
+        resource '*', headers: :any, methods: [:post, :options, :put, :delete]
       end
     end
 

@@ -9,7 +9,7 @@
 #  updated_at   :datetime         not null
 #  published_at :datetime
 #  trashed_at   :datetime
-#  status       :integer          default("pending")
+#  status       :integer          default("closed")
 #
 
 class SketchSerializer < ActiveModel::Serializer

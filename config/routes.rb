@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :board, only: [:index, :create, :show, :update]
-    resources :sketch, only: [:index, :show, :create, :update]
+    resources :sketch, only: [:index, :show, :create, :update, :destroy]
   end
 
   mount ActionCable.server => "/cable"
