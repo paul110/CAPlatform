@@ -15,6 +15,9 @@
 
 class Sketch < ApplicationRecord
 
+  belongs_to :user
+  belongs_to :purchased_from, class_name: 'User'
+
   enum status: {
     closed: 0,
     active: 1,
