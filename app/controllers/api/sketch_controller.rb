@@ -4,16 +4,22 @@ module Api
 
     def index
       @sketches = Sketch.order(:id).limit 20
-      render json: @sketches, each_serializer: SketchSerializer
+      respond_to do |format|
+        format.json { render json: @sketches, each_serializer: SketchSerializer }
+      end
     end
 
     def show
-      render json: @sketch
+      respond_to do |format|
+        format.json { render json: @sketch }
+      end
     end
 
     def create
       @sketch = Sketch.create(sketch_params)
-      render json: @sketch
+      respond_to do |format|
+        format.json { render json: @sketch }
+      end
     end
 
     def update
