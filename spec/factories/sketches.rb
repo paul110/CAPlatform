@@ -10,6 +10,7 @@
 #  published_at :datetime
 #  trashed_at   :datetime
 #  status       :integer          default("closed")
+#  name         :string           default("")
 #
 
 FactoryGirl.define do

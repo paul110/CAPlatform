@@ -53,7 +53,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'annotate'
+  gem 'annotate', '~> 2.7.1'
   gem 'web-console'
   gem 'listen', '~> 3.1.5'
   gem 'spring'
@@ -61,6 +61,3 @@ group :development do
   gem 'better_errors'
   gem 'awesome_print'
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
