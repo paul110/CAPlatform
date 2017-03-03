@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 20170303140700) do
     t.datetime "updated_at",                           null: false
     t.integer  "status",      default: 0
     t.jsonb    "metadata",    default: {}
-    t.datetime "last_active", default: -> { "now()" }
     t.string   "name",        default: ""
+    t.datetime "last_active", default: -> { "now()" }
     t.string   "maintype"
     t.string   "subtype"
   end
