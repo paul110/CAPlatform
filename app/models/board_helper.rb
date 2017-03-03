@@ -6,6 +6,6 @@ module BoardHelper
   }
 
   def get_accepted_links board_type
-    ACCEPTED_LINKS.with_indifferent_access[board_type]
+    ACCEPTED_LINKS.with_indifferent_access.fetch(board_type, ["sync_data"])
   end
 end
