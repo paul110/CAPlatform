@@ -2,12 +2,14 @@ class SketchChannel < ApplicationCable::Channel
   def subscribed
     stream_from "sketch_channel"
     if board = Board.find_or_create_by(mac: params[:mac])
+      Log.record_connection(board.name, board.mac)
       board.update status: "online"
     end
   end
 
   def unsubscribed
     if board = Board.find_by(mac: params[:mac])
+      Log.record_disconnect(board.name, board.mac)
       board.update status: "offline"
     end
   end
