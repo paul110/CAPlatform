@@ -15,9 +15,9 @@
 #  accepted_links :jsonb
 #
 
-include BoardHelper
-
 class Board < ApplicationRecord
+  include BoardHelper
+
   before_validation :update_last_active, on: :update
   before_save :add_link_types
 
@@ -29,8 +29,10 @@ class Board < ApplicationRecord
   private
 
   def add_link_types
-    self.accepted_links = BoardHelper.get_accepted_links self.subtype
+    return unless subtype_chaned?
+    self.accepted_links = BoardHelper.get_accepted_links subtype
   end
+
   def update_last_active
     return unless status == "online" || status_was == "online"
     self.last_active = Time.now
