@@ -29,8 +29,8 @@ class Board < ApplicationRecord
   private
 
   def add_link_types
-    return unless subtype_chaned?
-    self.accepted_links = BoardHelper.get_accepted_links subtype
+    return unless subtype_changed?
+    self.accepted_links = get_accepted_links subtype
   end
 
   def update_last_active
