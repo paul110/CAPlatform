@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170303221251) do
+ActiveRecord::Schema.define(version: 20170303224151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,14 +45,26 @@ ActiveRecord::Schema.define(version: 20170303221251) do
   end
 
   create_table "sketches", force: :cascade do |t|
-    t.jsonb    "links",        default: [], null: false
-    t.jsonb    "boards",       default: [], null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.jsonb    "links",        default: [],    null: false
+    t.jsonb    "boards",       default: [],    null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.datetime "published_at"
     t.datetime "trashed_at"
     t.integer  "status",       default: 0
     t.string   "name",         default: ""
+    t.integer  "user_id"
+    t.integer  "creator_id"
+    t.boolean  "listed",       default: false
+    t.string   "description",  default: ""
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.string   "email",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", using: :btree
   end
 
 end

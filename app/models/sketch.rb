@@ -15,8 +15,13 @@
 
 class Sketch < ApplicationRecord
 
+  belongs_to :user, optional: true
+  belongs_to :creator, class_name: 'User', optional: true
+
   enum status: {
     closed: 0,
-    active: 1,
+    active: 1
   }
+
+  scope :for_marketplace, -> { where(listed: true).order(id: :asc) }
 end
