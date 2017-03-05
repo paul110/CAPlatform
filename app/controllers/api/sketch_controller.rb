@@ -3,7 +3,7 @@ module Api
     before_action :find_sketch, only: [:show, :update, :destroy]
 
     def index
-      @sketches = Sketch.order(:id).limit 20
+      @sketches = Sketch.where(user_id: params.require(:user_id)).order(:id).limit 20
       respond_to do |format|
         format.json { render json: @sketches, each_serializer: SketchSerializer }
       end
@@ -42,10 +42,11 @@ module Api
 
     def find_sketch
       @sketch = Sketch.find params.require(:id)
+      raise "User is not owner of this sketch" if @sketch[:user_id] != params.require(:user_id).to_i
     end
 
     def sketch_params
-      params.slice(:boards, :links, :status, :name, :description).permit!
+      params.slice(:boards, :links, :status, :name, :description, :user_id).permit!
     end
 
   end
