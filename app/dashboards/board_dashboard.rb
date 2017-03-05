@@ -17,7 +17,7 @@ class BoardDashboard < Administrate::BaseDashboard
     last_active: Field::DateTime,
     name: Field::String,
     maintype: Field::String,
-    subtype: Field::String,
+    type: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -44,7 +44,7 @@ class BoardDashboard < Administrate::BaseDashboard
     :last_active,
     :name,
     :maintype,
-    :subtype,
+    :type,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -57,7 +57,7 @@ class BoardDashboard < Administrate::BaseDashboard
     :last_active,
     :name,
     :maintype,
-    :subtype,
+    :type,
   ].freeze
 
   # Overwrite this method to customize how boards are displayed
