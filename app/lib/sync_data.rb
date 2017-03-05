@@ -1,10 +1,6 @@
 class SyncData < CodeRunner
 
   def run parent_board
-    puts "BOARD IS: "
-    puts board
-    puts "PARENT BOARD is: "
-    puts parent_board
     update_board parent_board.metadata
   end
 

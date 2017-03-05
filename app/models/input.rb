@@ -1,20 +1,3 @@
-# == Schema Information
-#
-# Table name: boards
-#
-#  id             :integer          not null, primary key
-#  mac            :string
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  status         :integer          default("offline")
-#  metadata       :jsonb
-#  name           :string           default("")
-#  last_active    :datetime
-#  maintype       :string
-#  type           :string
-#  accepted_links :jsonb
-#
-
 class Input < Board
   def run
     sketch = find_sketch self.mac
@@ -25,5 +8,4 @@ class Input < Board
     end
     super
   end
-
 end

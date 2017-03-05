@@ -13,7 +13,6 @@
 #  maintype       :string
 #  type           :string
 #  accepted_links :jsonb
-#
 
 include BoardHelper
 
@@ -57,6 +56,7 @@ class Board < ApplicationRecord
   def sync board
   end
 
+  # sync the boards which have an ingoing sync_data link from this board
   def sync_data
     sketch = find_sketch self.mac
     links = sketch.links.select{ |l| l["logic"]=="sync_data"}

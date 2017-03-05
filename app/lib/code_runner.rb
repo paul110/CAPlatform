@@ -10,7 +10,6 @@ class CodeRunner
     toggle: "Flip the value between on and off",
     display_string: "Print a string to the LCD",
     link_opener: "Open an url on the Laptop peripheral",
-    sync_data: "Synchronise data between devices"
   }.freeze
 
   def self.execute_flow board
