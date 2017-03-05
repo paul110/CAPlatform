@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20170305001857) do
     t.string   "name",           default: ""
     t.datetime "last_active",    default: -> { "now()" }
     t.string   "maintype"
-    t.string   "type"
+    t.string   "subtype"
     t.jsonb    "accepted_links", default: {}
   end
 
@@ -45,14 +45,18 @@ ActiveRecord::Schema.define(version: 20170305001857) do
   end
 
   create_table "sketches", force: :cascade do |t|
-    t.jsonb    "links",        default: [], null: false
-    t.jsonb    "boards",       default: [], null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.jsonb    "links",        default: [],    null: false
+    t.jsonb    "boards",       default: [],    null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.datetime "published_at"
     t.datetime "trashed_at"
     t.integer  "status",       default: 0
     t.string   "name",         default: ""
+    t.integer  "user_id"
+    t.integer  "creator_id"
+    t.boolean  "listed",       default: false
+    t.string   "description",  default: ""
   end
 
   create_table "users", force: :cascade do |t|

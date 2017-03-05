@@ -11,14 +11,15 @@
 #  name           :string           default("")
 #  last_active    :datetime
 #  maintype       :string
-#  type           :string
+#  subtype        :string
 #  accepted_links :jsonb
-
-include BoardHelper
+#
 
 class Board < ApplicationRecord
+  include BoardHelper
+
   before_validation :update_last_active, on: :update
-  before_create :add_link_types
+  before_save :add_link_types
 
   enum status: {
     offline: 0,
@@ -45,6 +46,7 @@ class Board < ApplicationRecord
   end
 
   def add_link_types
+    return unless type_changed?
     self.accepted_links = BoardHelper.get_accepted_links self.type
   end
 

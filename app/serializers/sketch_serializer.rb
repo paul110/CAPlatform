@@ -11,15 +11,29 @@
 #  trashed_at   :datetime
 #  status       :integer          default("closed")
 #  name         :string           default("")
+#  user_id      :integer
+#  creator_id   :integer
+#  listed       :boolean          default(FALSE)
+#  description  :string           default("")
 #
 
 class SketchSerializer < ActiveModel::Serializer
-  attributes :id, :links, :boards, :status, :name
+  attributes :id, :links, :boards, :status, :name, :user, :creator, :user_id, :creator_id, :listed, :description
 
   def boards
     object.boards.each do |board|
       next unless b = Board.find_by(mac: board["mac"])
       board["boardConfig"] = BoardSerializer.new b
     end
+  end
+
+  def user
+    return "" unless object.user
+    "#{object.user.name}<#{object.user.email}>"
+  end
+
+  def creator
+    return "" unless object.creator
+    "#{object.creator.name}<#{object.creator.email}>"
   end
 end
