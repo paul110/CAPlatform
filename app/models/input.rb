@@ -11,7 +11,7 @@
 #  name           :string           default("")
 #  last_active    :datetime
 #  maintype       :string
-#  subtype        :string
+#  type           :string
 #  accepted_links :jsonb
 #
 
@@ -23,7 +23,7 @@ class Input < Board
       b = Board.find_by mac: link['to']
       b.run
     end
-    ActionCable.server.broadcast 'sketch_channel', message: self.metadata
+    super
   end
 
 end

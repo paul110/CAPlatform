@@ -1,22 +1,9 @@
-# == Schema Information
-#
-# Table name: boards
-#
-#  id             :integer          not null, primary key
-#  mac            :string
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  status         :integer          default("offline")
-#  metadata       :jsonb
-#  name           :string           default("")
-#  last_active    :datetime
-#  maintype       :string
-#  subtype        :string
-#  accepted_links :jsonb
-#
-
 class Screen < Board
   def run
-    ActionCable.server.broadcast 'sketch_channel', message: self.metadata
+    super
+  end
+
+  def sync board
+    self.update! metadata: { type: "link_opener", url: board.metadata.dig('href') }
   end
 end

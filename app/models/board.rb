@@ -11,7 +11,7 @@
 #  name           :string           default("")
 #  last_active    :datetime
 #  maintype       :string
-#  subtype        :string
+#  type           :string
 #  accepted_links :jsonb
 #
 
@@ -51,5 +51,18 @@ class Board < ApplicationRecord
   def update_last_active
     return unless status == "online" || status_was == "online"
     self.last_active = Time.now
+  end
+
+  def sync board
+  end
+
+  def sync_data
+    sketch = find_sketch self.mac
+    links = sketch.links.select{ |l| l["logic"]=="sync_data"}
+    links.each do |link|
+      if link["from"] == self.mac
+        Board.find_by(link["to"]).sync self
+      end
+    end
   end
 end

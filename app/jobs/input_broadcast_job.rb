@@ -3,6 +3,6 @@ class InputBroadcastJob < ApplicationJob
 
   def perform data, board
     board.run
-    # CodeRunner.execute_flow board
+    board.sync_data
   end
 end
