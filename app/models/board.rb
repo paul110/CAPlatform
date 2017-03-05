@@ -27,6 +27,7 @@ class Board < ApplicationRecord
   }
 
   def run
+    self.sync_data
     ActionCable.server.broadcast 'sketch_channel', message: self.metadata
   end
 
