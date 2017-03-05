@@ -11,7 +11,7 @@
 #  name           :string           default("")
 #  last_active    :datetime
 #  maintype       :string
-#  type           :string
+#  subtype        :string
 #  accepted_links :jsonb
 #
 
