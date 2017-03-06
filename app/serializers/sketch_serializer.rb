@@ -18,7 +18,7 @@
 #
 
 class SketchSerializer < ActiveModel::Serializer
-  attributes :id, :links, :boards, :status, :name, :user, :creator, :user_id, :creator_id, :listed, :description
+  attributes :id, :links, :boards, :status, :name, :user_id, :creator, :user_id, :creator_id, :listed, :description
 
   def boards
     object.boards.each do |board|
