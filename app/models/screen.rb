@@ -16,15 +16,16 @@
 #
 
 class Screen < Board
+
   def get_methods
     { run: "default method" }
   end
-  
+
   def run
-    super
+    broadcast
   end
 
   def sync board
-    self.update! metadata: { type: "link_opener", url: board.metadata.dig('href') }
+    update! metadata: { type: "link_opener", url: board.metadata.dig('href') }
   end
 end

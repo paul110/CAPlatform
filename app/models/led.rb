@@ -17,6 +17,7 @@
 
 class Led < Board
   LED_PIN = 13.to_s
+
   def get_methods
     {
       toggle: "turn on or off",
@@ -27,7 +28,7 @@ class Led < Board
 
   def run
     toggle
-    super
+    broadcast
   end
 
   def toggle
@@ -36,7 +37,7 @@ class Led < Board
     else
       update_board 0
     end
-    ActionCable.server.broadcast 'sketch_channel', message: self.metadata
+    broadcast
   end
 
   def blink
@@ -54,10 +55,10 @@ class Led < Board
   private
 
   def current_value
-    self.metadata[LED_PIN].to_i
+    metadata[LED_PIN].to_i
   end
 
   def update_board value
-    self.update! metadata: { LED_PIN => value, type: "led" }
+    update! metadata: { LED_PIN => value, type: "led" }
   end
 end
