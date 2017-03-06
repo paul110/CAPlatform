@@ -11,14 +11,14 @@
 #  name           :string           default("")
 #  last_active    :datetime
 #  maintype       :string
-#  subtype        :string
+#  type           :string
 #  accepted_links :jsonb
 #
 
 class BoardSerializer < ActiveModel::Serializer
   include ActionView::Helpers::DateHelper
 
-  attributes :id, :mac, :status, :name, :last_activity, :maintype, :subtype, :accepted_links
+  attributes :id, :mac, :status, :name, :last_activity, :maintype, :type, :accepted_links
 
   def last_activity
     "#{distance_of_time_in_words(Time.now, object.last_active, include_seconds: true)} ago"

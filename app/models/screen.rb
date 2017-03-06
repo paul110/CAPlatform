@@ -15,8 +15,16 @@
 #  accepted_links :jsonb
 #
 
-FactoryGirl.define do
-  factory :board do
-    mac "1234"
+class Screen < Board
+  def get_methods
+    { run: "default method" }
+  end
+  
+  def run
+    super
+  end
+
+  def sync board
+    self.update! metadata: { type: "link_opener", url: board.metadata.dig('href') }
   end
 end

@@ -2,6 +2,6 @@ class InputBroadcastJob < ApplicationJob
   queue_as :default
 
   def perform data, board
-    CodeRunner.execute_flow board
+    board.run
   end
 end

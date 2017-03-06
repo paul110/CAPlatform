@@ -9,7 +9,7 @@ class CodeRunner
   AFTER_HOOKS = {
     toggle: "Flip the value between on and off",
     display_string: "Print a string to the LCD",
-    link_opener: "Open an url on the Laptop peripheral"
+    link_opener: "Open an url on the Laptop peripheral",
   }.freeze
 
   def self.execute_flow board

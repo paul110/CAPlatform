@@ -15,8 +15,19 @@
 #  accepted_links :jsonb
 #
 
-FactoryGirl.define do
-  factory :board do
-    mac "1234"
+class Input < Board
+  def get_methods
+    { run: "default method" }
+  end
+
+  def run
+    sketch = find_sketch self.mac
+    links = find_boards self.mac, sketch, key: 'from'
+    links.each do |link|
+      b = Board.find_by mac: link['to']
+      b.send(link["logic"])
+      puts b
+    end
+    super
   end
 end
