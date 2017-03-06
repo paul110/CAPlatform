@@ -10,10 +10,7 @@ module Api
 
     def find_links
       CodeRunner::BEFORE_HOOKS.merge(CodeRunner::AFTER_HOOKS).map do |key, value|
-        {
-          name: key,
-          description: value
-        }
+        { name: key, description: value }
       end
     end
 

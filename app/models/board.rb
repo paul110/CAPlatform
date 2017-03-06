@@ -11,7 +11,7 @@
 #  name           :string           default("")
 #  last_active    :datetime
 #  maintype       :string
-#  subtype        :string
+#  type           :string
 #  accepted_links :jsonb
 #
 
@@ -21,14 +21,21 @@ class Board < ApplicationRecord
   before_validation :update_last_active, on: :update
   before_save :add_link_types
 
+
+
   enum status: {
     offline: 0,
     online: 1
   }
 
+
   def run
     self.sync_data
     ActionCable.server.broadcast 'sketch_channel', message: self.metadata
+  end
+
+  def get_methods
+    {}
   end
 
   protected
@@ -46,8 +53,9 @@ class Board < ApplicationRecord
   end
 
   def add_link_types
-    return unless type_changed?
-    self.accepted_links = BoardHelper.get_accepted_links self.type
+    # return unless type_changed?
+    self.accepted_links = get_methods
+    # self.accepted_links = BoardHelper.get_accepted_links self.type
   end
 
   def update_last_active

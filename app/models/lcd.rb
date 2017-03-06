@@ -11,11 +11,20 @@
 #  name           :string           default("")
 #  last_active    :datetime
 #  maintype       :string
-#  subtype        :string
+#  type           :string
 #  accepted_links :jsonb
 #
 
 class Lcd < Board
+
+  def get_methods
+    {
+      hello: "Display hello world",
+      buna: "Display buna dimineata",
+      run: "Display articles"
+    }
+  end
+
   def run
     data = ExternalDatum.first.data
     index = (self.metadata.dig('id').to_i + 1 < data.length) ? self.metadata.dig('id').to_i + 1 : 0
@@ -23,7 +32,18 @@ class Lcd < Board
     super
   end
 
+  def hello
+    self.update! metadata: { type: 'lcd_display', value: "hello world", id: 1, href: "www.google.com"}
+    ActionCable.server.broadcast 'sketch_channel', message: self.metadata
+  end
+
+  def buna
+    self.update! metadata: { type: 'lcd_display', value: "buna dimineata", id: 1, href: "www.google.com" }
+    ActionCable.server.broadcast 'sketch_channel', message: self.metadata
+  end
+
   def update_board value, href, id
     self.update! metadata: { type: 'lcd_display', value: value, id: id, href: href}
   end
+
 end

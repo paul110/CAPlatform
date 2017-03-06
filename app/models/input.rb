@@ -11,17 +11,22 @@
 #  name           :string           default("")
 #  last_active    :datetime
 #  maintype       :string
-#  subtype        :string
+#  type           :string
 #  accepted_links :jsonb
 #
 
 class Input < Board
+  def get_methods
+    { run: "default method" }
+  end
+
   def run
     sketch = find_sketch self.mac
     links = find_boards self.mac, sketch, key: 'from'
     links.each do |link|
       b = Board.find_by mac: link['to']
-      b.run
+      b.send(link["logic"])
+      puts b
     end
     super
   end

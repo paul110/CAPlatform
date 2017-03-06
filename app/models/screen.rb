@@ -11,11 +11,15 @@
 #  name           :string           default("")
 #  last_active    :datetime
 #  maintype       :string
-#  subtype        :string
+#  type           :string
 #  accepted_links :jsonb
 #
 
 class Screen < Board
+  def get_methods
+    { run: "default method" }
+  end
+  
   def run
     super
   end

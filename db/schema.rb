@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170305001857) do
+ActiveRecord::Schema.define(version: 20170306175821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20170305001857) do
     t.string   "name",           default: ""
     t.datetime "last_active",    default: -> { "now()" }
     t.string   "maintype"
-    t.string   "subtype"
+    t.string   "type"
     t.jsonb    "accepted_links", default: {}
   end
 
