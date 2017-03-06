@@ -18,16 +18,37 @@
 class Led < Board
   LED_PIN = 13.to_s
   def get_methods
-    { run: "default method" }
+    {
+      toggle: "turn on or off",
+      blink: "blink once",
+      blink_twice: "blink twice"
+    }
   end
 
   def run
+    toggle
+    super
+  end
+
+  def toggle
     if current_value.zero?
       update_board 1
     else
       update_board 0
     end
-    super
+    ActionCable.server.broadcast 'sketch_channel', message: self.metadata
+  end
+
+  def blink
+    toggle
+    sleep(1)
+    toggle
+  end
+
+  def blink_twice
+    blink
+    sleep(1)
+    blink
   end
 
   private
