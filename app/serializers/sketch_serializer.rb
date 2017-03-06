@@ -18,8 +18,8 @@
 #
 
 class SketchSerializer < ActiveModel::Serializer
-  attributes :id, :links, :boards, :status, :name, :user, :creator, :creator_id, :listed, :description
-
+  attributes :id, :links, :boards, :status, :name
+  
   def boards
     object.boards.each do |board|
       next unless b = Board.find_by(mac: board["mac"])
