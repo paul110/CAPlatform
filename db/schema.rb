@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306175821) do
+ActiveRecord::Schema.define(version: 20170306223858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,9 @@ ActiveRecord::Schema.define(version: 20170306175821) do
     t.string   "name",            default: ""
     t.string   "maintype"
     t.string   "type"
-    t.jsonb    "accepted_links", default: {}
+    t.jsonb    "accepted_links",  default: {}
+    t.integer  "register_status", default: 0
+    t.integer  "user_id"
   end
 
   create_table "external_data", force: :cascade do |t|
