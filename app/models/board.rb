@@ -14,8 +14,8 @@
 #  type           :string
 #  accepted_links :jsonb
 #
-
 class Board < ApplicationRecord
+
   SketchNotFound = Class.new(RuntimeError)
   include BoardHelper
 
@@ -38,7 +38,7 @@ class Board < ApplicationRecord
   protected
 
   def broadcast
-    Log.sent "Sending (#{metadata}) to channel"
+    Log.sent "Board: #{name}<#{mac}> broadcasting (#{metadata}) to channel"
     ActionCable.server.broadcast 'sketch_channel', message: metadata
   end
 
@@ -55,10 +55,9 @@ class Board < ApplicationRecord
     sketch.links.select{ |l| l[key] == mac }
   end
 
+  return unless type_changed?
   def add_link_types
-    # return unless type_changed?
     self.accepted_links = get_methods
-    # self.accepted_links = BoardHelper.get_accepted_links self.type
   end
 
   def update_last_active
