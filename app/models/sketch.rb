@@ -28,4 +28,5 @@ class Sketch < ApplicationRecord
   }
 
   scope :for_marketplace, -> { where(listed: true).order(id: :asc) }
+  scope :for_user, -> (user_id) { where(user_id: user_id) }
 end

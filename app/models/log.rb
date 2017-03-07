@@ -15,24 +15,40 @@ class Log < ApplicationRecord
   enum log_type: {
     error: 0,
     connected: 1,
-    disconnected: 2
+    disconnected: 2,
+    input_received: 3,
+    output_sent: 4
   }
 
+  after_commit :send_channel_update, on: :create
+
   scope :latest_logs, -> {
-    ids = order("id desc").limit(10)
-    where(id: ids)
+    ids = order("id desc").limit(20).pluck(:id)
+    where(id: ids).order("id asc")
   }
 
   def self.send_latest
     ActionCable.server.broadcast 'log_channel', message: serialize_logs
   end
 
-  def self.record_connection board_name, board_mac
+  def self.connect board_name, board_mac
     create! log_type: "connected", message: "Board: #{board_name}<#{board_mac}> connected to the channel."
   end
 
-  def self.record_disconnect board_name, board_mac
+  def self.disconnect board_name, board_mac
     create! log_type: "disconnected", message: "Board: #{board_name}<#{board_mac}> disconnected from the channel."
+  end
+
+  def self.error message
+    create! log_type: "error", message: message
+  end
+
+  def self.received message
+    create! log_type: "input_received", message: message
+  end
+
+  def self.sent message
+    create! log_type: "output_sent", message: message
   end
 
   private
@@ -41,5 +57,9 @@ class Log < ApplicationRecord
     latest_logs.map do |log|
       LogSerializer.new(log).as_json
     end
+  end
+
+  def send_channel_update
+    ActionCable.server.broadcast 'log_channel', message: [LogSerializer.new(Log.last).as_json]
   end
 end
