@@ -19,6 +19,7 @@ class Lcd < Board
 
   def get_methods
     {
+      sync_data: "display text",
       hello: "Display hello world",
       buna: "Display buna dimineata",
       run: "Display articles"
@@ -26,25 +27,24 @@ class Lcd < Board
   end
 
   def run
-    data = ExternalDatum.first.data
-    index = (self.metadata.dig('id').to_i + 1 < data.length) ? metadata.dig('id').to_i + 1 : 0
-    update_board data.dig(index, 'title'), data.dig(index, 'href'), index
-    sync_data
     broadcast
+  end
+
+  def sync board
+    update_board board.metadata.dig("value")
   end
 
   def hello
-    update! metadata: { type: 'lcd_display', value: "hello world", id: 1, href: "www.google.com"}
-    broadcast
+    update_board "hello world"
   end
 
   def buna
-    update! metadata: { type: 'lcd_display', value: "buna dimineata", id: 1, href: "www.google.com" }
-    broadcast
+    update_board "buna dimineata"
   end
 
-  def update_board value, href, id
-    update! metadata: { type: 'lcd_display', value: value, id: id, href: href}
+  def update_board value
+    update! metadata: { type: 'lcd_display', value: value }
+    broadcast
   end
 
 end

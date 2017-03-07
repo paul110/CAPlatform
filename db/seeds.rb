@@ -7,3 +7,4 @@ boards = ["{\"id\":1,\"mac\":\"B4:21:8A:F5:0A:BA\",\"button\":false,\"created_at
 boards.each{ |board| Board.create(JSON.parse(board).delete_if{ |k, _| ["id", "button"].include?(k) }) }
 
 NewsFetcher.populate "cnn"
+Pseudoboard.create(mac: "pseudoboard1", name: "News")
