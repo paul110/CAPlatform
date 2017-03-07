@@ -16,17 +16,23 @@
 #
 
 class Input < Board
+
   def get_methods
     { run: "default method" }
   end
 
   def run
-    sketch = find_sketch self.mac
-    links = find_boards self.mac, sketch, key: 'from'
+    sketch = find_sketch
+    links = find_boards sketch, key: 'from'
     links.each do |link|
       b = Board.find_by mac: link['to']
-      b.send(link["logic"])
-      puts b
+      logger.debug "Running #{link['logic']} for #{b.name} #{b.mac}"
+      if b.get_methods.has_key?(link["logic"].to_sym)
+        b.public_send(link["logic"])
+      else
+        logger.debug "Board #{b.mac} doesn't support logic #{link['logic']}"
+        Log.error "Board #{b.name}<#{b.mac}> doesn't support logic #{link['logic']}"
+      end
     end
     super
   end

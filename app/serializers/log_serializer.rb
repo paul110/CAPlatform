@@ -12,7 +12,11 @@
 class LogSerializer < ActiveModel::Serializer
   attributes :log_type, :message, :created_at, :id
 
+  def log_type
+    object.log_type.humanize
+  end
+
   def created_at
-    object.created_at.to_s(:short)
+    object.created_at.strftime("%H:%M:%S.%L")
   end
 end
