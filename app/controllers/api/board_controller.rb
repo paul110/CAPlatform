@@ -51,8 +51,8 @@ module Api
     end
 
     def find_board_partial
-      suffix = "%#{params[:code]}"
-      Board.where(register_status: 0, status: 'online').where('mac LIKE :suffix', suffix: suffix)
+      suffix = "%#{params[:partial_mac].insert(2, ':')}"
+      Board.where(register_status: 'unregistered', status: 'online').where('mac LIKE :suffix', suffix: suffix)
     end
   end
 end
