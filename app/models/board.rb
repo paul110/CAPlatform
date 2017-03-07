@@ -25,7 +25,7 @@ class Board < ApplicationRecord
 
   belongs_to :user, optional: true
   before_validation :update_last_active, on: :update
-  before_save :add_link_types
+  after_commit :add_link_types
 
   enum status: {
     offline: 0,
@@ -67,8 +67,8 @@ class Board < ApplicationRecord
   end
 
   def add_link_types
-    return unless type_changed?
-    self.accepted_links = get_methods
+    return if accepted_links.with_indifferent_access == get_methods.with_indifferent_access()
+    update! accepted_links: get_methods
   end
 
   def update_last_active
