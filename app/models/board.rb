@@ -19,12 +19,20 @@ class Board < ApplicationRecord
   SketchNotFound = Class.new(RuntimeError)
   include BoardHelper
 
+
+  belongs_to :user, optional: true
   before_validation :update_last_active, on: :update
   before_save :add_link_types
 
   enum status: {
     offline: 0,
     online: 1
+  }
+
+  enum register_status: {
+    unregistered: 0,
+    pending: 1,
+    registered: 2
   }
 
   def run
