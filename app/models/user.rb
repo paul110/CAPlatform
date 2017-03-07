@@ -15,4 +15,5 @@
 
 class User < ApplicationRecord
   has_many :sketches
+  has_many :boards
 end

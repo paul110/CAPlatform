@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :board, only: [:index, :create, :show, :update]
+    resources :board do
+      collection do
+        get :register
+      end
+    end #only: [:index, :create, :show, :update]
     resources :sketch, only: [:index, :show, :create, :update, :destroy]
     resources :links, only: [:index]
     resources :marketplace, only: [:index]

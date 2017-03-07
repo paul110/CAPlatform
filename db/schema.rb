@@ -10,22 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170303224151) do
+ActiveRecord::Schema.define(version: 20170306223858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "boards", force: :cascade do |t|
     t.string   "mac"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.integer  "status",         default: 0
-    t.jsonb    "metadata",       default: {}
-    t.string   "name",           default: ""
-    t.datetime "last_active",    default: -> { "now()" }
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.integer  "status",          default: 0
+    t.jsonb    "metadata",        default: {}
+    t.datetime "last_active",     default: -> { "now()" }
+    t.string   "name",            default: ""
     t.string   "maintype"
     t.string   "subtype"
-    t.jsonb    "accepted_links", default: {}
+    t.jsonb    "accepted_links",  default: {}
+    t.integer  "register_status", default: 0
+    t.integer  "user_id"
   end
 
   create_table "external_data", force: :cascade do |t|
