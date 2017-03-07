@@ -50,7 +50,7 @@ class Board < ApplicationRecord
 
   def broadcast
     Log.sent "Board: #{name}<#{mac}> broadcasting (#{metadata}) to channel"
-    ActionCable.server.broadcast 'sketch_channel', message: metadata
+    ActionCable.server.broadcast "sketch_channel#{mac}", message: metadata
   end
 
   def find_sketch

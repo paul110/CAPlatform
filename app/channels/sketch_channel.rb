@@ -1,6 +1,6 @@
 class SketchChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "sketch_channel"
+    stream_from "sketch_channel#{params[:mac]}"
     if board = Board.find_or_create_by(mac: params[:mac])
       Log.connect(board.name, board.mac)
       board.update status: "online"

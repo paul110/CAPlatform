@@ -23,7 +23,7 @@ class Screen < Board
     {
       run: "default method",
       sync_data: "synchronize url"
-     }
+    }
   end
 
   def run
