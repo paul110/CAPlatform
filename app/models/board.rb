@@ -55,8 +55,8 @@ class Board < ApplicationRecord
     sketch.links.select{ |l| l[key] == mac }
   end
 
-  return unless type_changed?
   def add_link_types
+    return unless type_changed?
     self.accepted_links = get_methods
   end
 
@@ -73,7 +73,8 @@ class Board < ApplicationRecord
     sketch = find_sketch
     links = sketch.links.select{ |l| l["logic"] == "sync_data"}
     links.each do |link|
-      if link["from"] == self.mac
+      if link["from"] == mac
+        # gets data from this board into the other one
         Board.find_by(mac: link["to"]).sync self
       end
     end

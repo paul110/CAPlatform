@@ -6,4 +6,4 @@ boards = ["{\"id\":1,\"mac\":\"B4:21:8A:F5:0A:BA\",\"button\":false,\"created_at
   "{\"id\":6, \"mac\": \"b8:27:eb:54:6a:f7\", \"status\":\"online\", \"metadata\": {}, \"name\": \"ButtonPi\", \"type\": \"Input\"}"]
 boards.each{ |board| Board.create(JSON.parse(board).delete_if{ |k, _| ["id", "button"].include?(k) }) }
 
-ExternalDatum.create! source_type: 0, name: 'NY Times', url: '', data: [{href: '', title: 'First headline'}]
+NewsFetcher.populate "cnn"
