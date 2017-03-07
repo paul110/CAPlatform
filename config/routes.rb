@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   namespace :api do
     resources :board do
       collection do
-        get :register
+        post :register
       end
-    end #only: [:index, :create, :show, :update]
+    end
     resources :sketch, only: [:index, :show, :create, :update, :destroy]
     resources :links, only: [:index]
     resources :marketplace, only: [:index]
