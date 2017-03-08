@@ -49,7 +49,7 @@ module Api
     end
 
     def sketch_params
-      params.slice(:boards, :links, :status, :name, :description, :user_id).permit!
+      params.slice(:boards, :links, :status, :name, :description, :user_id, :listed).permit!
     end
 
   end

@@ -14,7 +14,11 @@ Rails.application.routes.draw do
     end
     resources :sketch, only: [:index, :show, :create, :update, :destroy]
     resources :links, only: [:index]
-    resources :marketplace, only: [:index]
+    resources :marketplace, only: [:index] do
+      collection do
+        post :purchase
+      end
+    end
     resources :sessions, only: [:create]
   end
 
