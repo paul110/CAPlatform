@@ -29,4 +29,12 @@ class Sketch < ApplicationRecord
 
   scope :for_marketplace, -> { where(listed: true).order(id: :asc) }
   scope :for_user, -> (user_id) { where(user_id: user_id) }
+
+  def show_delete_path
+    Rails.application.routes.url_helpers.admin_sketch_path(id)
+  end
+
+  def edit_path
+    Rails.application.routes.url_helpers.edit_admin_sketch_path(id)
+  end
 end
