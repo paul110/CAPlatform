@@ -15,6 +15,7 @@ gem 'sidekiq', '~> 4.2.2'
 gem 'redis-namespace'
 gem 'rack-cors', require: 'rack/cors'
 gem 'administrate', '~> 0.3.0'
+gem 'administrate-field-json', '~> 0.0.4'
 gem 'bourbon', '~> 4.3.3'
 gem 'binding_of_caller'
 

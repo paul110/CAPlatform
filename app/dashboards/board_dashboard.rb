@@ -64,6 +64,6 @@ class BoardDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(board)
-    "Board<#{board.name}> Mac: #{board.mac}"
+    "#{board.name}<#{board.mac}>"
   end
 end

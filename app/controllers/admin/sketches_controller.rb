@@ -15,5 +15,12 @@ module Admin
 
     # See https://administrate-docs.herokuapp.com/customizing_controller_actions
     # for more information
+
+    def resource_params
+      new_params = params.require(:sketch).slice(*permitted_attributes).permit!
+      new_params[:links] = JSON.parse(new_params[:links])
+      new_params[:boards] = JSON.parse(new_params[:boards])
+      new_params
+    end
   end
 end

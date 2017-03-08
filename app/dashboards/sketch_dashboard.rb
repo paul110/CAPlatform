@@ -9,12 +9,15 @@ class SketchDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    links: Field::String.with_options(searchable: false),
-    boards: Field::String.with_options(searchable: false),
+    links: Field::JSON,
+    boards: Field::JSON,
+    name: Field::String,
+    description: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     published_at: Field::DateTime,
     trashed_at: Field::DateTime,
+    listed: Field::Boolean,
     status: Field::String.with_options(searchable: false),
   }.freeze
 
@@ -25,8 +28,9 @@ class SketchDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :id,
-    :links,
-    :boards,
+    :name,
+    :description,
+    :listed
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -51,12 +55,15 @@ class SketchDashboard < Administrate::BaseDashboard
     :published_at,
     :trashed_at,
     :status,
+    :name,
+    :description,
+    :listed
   ].freeze
 
   # Overwrite this method to customize how sketches are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(sketch)
-  #   "Sketch ##{sketch.id}"
-  # end
+  def display_resource(sketch)
+    "Sketch #{sketch.name}"
+  end
 end
