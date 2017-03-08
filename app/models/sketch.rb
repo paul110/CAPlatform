@@ -37,4 +37,8 @@ class Sketch < ApplicationRecord
   def edit_path
     Rails.application.routes.url_helpers.edit_admin_sketch_path(id)
   end
+
+  def user_details
+    "#{user&.name}<#{user&.email}>"
+  end
 end
