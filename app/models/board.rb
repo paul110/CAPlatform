@@ -46,6 +46,14 @@ class Board < ApplicationRecord
     {}
   end
 
+  def show_delete_path
+    Rails.application.routes.url_helpers.admin_board_path(id)
+  end
+
+  def edit_path
+    Rails.application.routes.url_helpers.edit_admin_board_path(id)
+  end
+
   protected
 
   def broadcast
