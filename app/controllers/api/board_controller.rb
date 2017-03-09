@@ -35,6 +35,15 @@ module Api
       end
     end
 
+    def deregister
+      @board = find_board
+      @board.update register_status: 'unregistered'
+      ActionCable.server.broadcast 'register_channel', board: @board, type: 'deregister_board'
+      respond_to do |format|
+        format.json { render json: @board }
+      end
+    end
+
     private
 
 
