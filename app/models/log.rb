@@ -23,7 +23,7 @@ class Log < ApplicationRecord
   after_commit :send_channel_update, on: :create
 
   scope :latest_logs, -> {
-    ids = order("id desc").limit(20).pluck(:id)
+    ids = where(created_at: (Time.now.beginning_of_day..Time.now.end_of_day)).order("id desc").limit(20).pluck(:id)
     where(id: ids).order("id asc")
   }
 
