@@ -17,7 +17,8 @@ class Log < ApplicationRecord
     connected: 1,
     disconnected: 2,
     input_received: 3,
-    output_sent: 4
+    output_sent: 4,
+    register: 5
   }
 
   after_commit :send_channel_update, on: :create
@@ -31,12 +32,12 @@ class Log < ApplicationRecord
     ActionCable.server.broadcast 'log_channel', message: serialize_logs
   end
 
-  def self.connect board_name, board_mac
-    create! log_type: "connected", message: "Board: #{board_name}<#{board_mac}> connected to the channel."
+  def self.connect board_name, board_mac, channel
+    create! log_type: "connected", message: "Board: #{board_name}<#{board_mac}> connected to the #{channel}."
   end
 
-  def self.disconnect board_name, board_mac
-    create! log_type: "disconnected", message: "Board: #{board_name}<#{board_mac}> disconnected from the channel."
+  def self.disconnect board_name, board_mac, channel
+    create! log_type: "disconnected", message: "Board: #{board_name}<#{board_mac}> disconnected from the #{channel}."
   end
 
   def self.error message
@@ -49,6 +50,10 @@ class Log < ApplicationRecord
 
   def self.sent message
     create! log_type: "output_sent", message: message
+  end
+
+  def self.register board, old_status
+    create! log_type: "register", message: "Board: #{board.name}<#{board.mac}> changed from #{old_status} to #{board.register_status}"
   end
 
   private

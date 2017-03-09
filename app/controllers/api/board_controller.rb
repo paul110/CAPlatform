@@ -1,5 +1,7 @@
 module Api
   class BoardController < BaseController
+    before_action :find_board, only: [:show, :update, :deregister]
+
     def index
       @boards = Board.registered.order(:id).limit 10
       respond_to do |format|
@@ -12,14 +14,12 @@ module Api
     end
 
     def show
-      @board = find_board
       respond_to do |format|
         format.json { render json: @board }
       end
     end
 
     def update
-      @board = find_board
       @board.update update_board_params
       render json: {}, status: :ok
     end
@@ -28,6 +28,7 @@ module Api
       @boards = find_board_partial
       @boards.each do |board|
         board.update register_status: 'pending', user: User.first
+        Log.register(board, 'unregistered')
         ActionCable.server.broadcast 'register_channel', board: board, type: 'board_details'
       end
       respond_to do |format|
@@ -36,8 +37,8 @@ module Api
     end
 
     def deregister
-      @board = find_board
       @board.update register_status: 'unregistered'
+      Log.register(@board, 'registered')
       ActionCable.server.broadcast 'register_channel', board: @board, type: 'deregister_board'
       respond_to do |format|
         format.json { render json: @board }
@@ -56,7 +57,7 @@ module Api
     end
 
     def find_board
-      Board.find_by(mac: params[:id]).presence || Board.find(params[:id])
+      @board = Board.find_by(mac: params[:id]).presence || Board.find(params[:id])
     end
 
     def find_board_partial
