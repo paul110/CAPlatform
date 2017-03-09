@@ -2,11 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Api::BoardController, type: :controller do
   describe "GET #index" do
-    let!(:board) { create(:board, mac: "1234", status: "online") }
-    let!(:bad_board) { create(:board, mac: nil) }
+    let!(:user) { create(:user) }
+    let!(:board) { create(:board, mac: "1234", status: "online", user: user) }
+    let!(:bad_board) { create(:board, mac: "5678", user: user, register_status: "unregistered") }
 
-    it "only shows boards with mac addresses" do
-      get :index, params: { format: :json }
+    it "only registered boards" do
+      get :index, params: { format: :json, user_id: user.id }
 
       expect(json_response.count).to eq 1
       expect(json_response.dig(0, "mac")).to eq board.mac
@@ -14,14 +15,14 @@ RSpec.describe Api::BoardController, type: :controller do
 
     it "raises a 406 for bad format" do
       expect{
-        get :index, params: { format: :html }
+        get :index, params: { format: :html, user_id: user.id }
       }.to raise_error("ActionController::UnknownFormat")
     end
   end
 
   describe "GET #show" do
     let!(:board_with_mac) { create(:board, mac: "12345") }
-    let!(:board) { create(:board, mac: nil) }
+    let!(:board) { create(:board, mac: "5678") }
 
     it "finds by mac" do
       get :show, params: { id: board_with_mac.mac, format: :json }

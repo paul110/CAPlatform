@@ -18,6 +18,8 @@
 
 FactoryGirl.define do
   factory :board do
+    type "Input"
     mac "1234"
+    register_status "registered"
   end
 end

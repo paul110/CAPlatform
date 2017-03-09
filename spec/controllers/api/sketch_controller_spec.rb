@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Api::SketchController, type: :controller do
-  let!(:board1) { create(:board, mac: "1234") }
-  let!(:board2) { create(:board, mac: "5678") }
-  let!(:sketch) { create(:sketch, boards: boards, links: links) }
+  let!(:user) { create(:user) }
+  let!(:board1) { create(:board, mac: "1234", user: user) }
+  let!(:board2) { create(:board, mac: "5678", user: user) }
+  let!(:sketch) { create(:sketch, boards: boards, links: links, user: user) }
 
   describe "PUT #update" do
     it "updates the sketch" do
@@ -19,6 +20,7 @@ RSpec.describe Api::SketchController, type: :controller do
 
   def sketch_params params = {}
     {
+      user_id: user.id,
       id: sketch.id,
       boards: boards(params),
       links: links(params),
