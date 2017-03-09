@@ -54,6 +54,10 @@ class Board < ApplicationRecord
     Rails.application.routes.url_helpers.edit_admin_board_path(id)
   end
 
+  def user_details
+    "#{user&.name}<#{user&.email}>"
+  end
+
   protected
 
   def broadcast

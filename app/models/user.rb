@@ -16,4 +16,12 @@
 class User < ApplicationRecord
   has_many :sketches
   has_many :boards
+
+  def show_delete_path
+    Rails.application.routes.url_helpers.admin_user_path(id)
+  end
+
+  def edit_path
+    Rails.application.routes.url_helpers.edit_admin_user_path(id)
+  end
 end

@@ -4,6 +4,13 @@ class Purchaser
   def initialize sketch_id, user_id
     @sketch_id = sketch_id
     @user = User.find user_id
+    @sketch = Sketch.new new_sketch_attributes.merge(default_params)
+  end
+
+  def purchase
+    update_boards_for_new_user
+    sketch.save!
+    sketch
   end
 
   private
@@ -15,6 +22,13 @@ class Purchaser
       .attributes
       .with_indifferent_access
       .slice(:boards, :links, :name, :description)
+  end
+
+  def default_params
+    {
+      status: "closed",
+      user: user
+    }
   end
 
 end
