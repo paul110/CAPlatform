@@ -1,7 +1,7 @@
 module Api
   class BoardController < BaseController
     def index
-      @boards = Board.where.not(mac: nil).order(:id).limit 10
+      @boards = Board.registered.order(:id).limit 10
       respond_to do |format|
         format.json { render json: @boards, each_serializer: BoardSerializer }
       end
