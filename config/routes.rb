@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :board do
       collection do
         post :register
+        post :deregister
       end
     end
     resources :sketch, only: [:index, :show, :create, :update, :destroy]
