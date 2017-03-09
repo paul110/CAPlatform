@@ -16,7 +16,6 @@ class BoardDashboard < Administrate::BaseDashboard
     metadata: Field::String.with_options(searchable: false),
     last_active: Field::DateTime,
     name: Field::String,
-    maintype: Field::String,
     type: Field::String,
   }.freeze
 
@@ -29,7 +28,7 @@ class BoardDashboard < Administrate::BaseDashboard
     :id,
     :mac,
     :name,
-    :maintype
+    :type
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -43,7 +42,6 @@ class BoardDashboard < Administrate::BaseDashboard
     :metadata,
     :last_active,
     :name,
-    :maintype,
     :type,
   ].freeze
 
@@ -56,7 +54,6 @@ class BoardDashboard < Administrate::BaseDashboard
     :metadata,
     :last_active,
     :name,
-    :maintype,
     :type,
   ].freeze
 

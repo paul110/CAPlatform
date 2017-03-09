@@ -10,7 +10,6 @@
 #  metadata        :jsonb
 #  name            :string           default("")
 #  last_active     :datetime
-#  maintype        :string
 #  type            :string
 #  accepted_links  :jsonb
 #  register_status :integer          default("unregistered")
@@ -20,7 +19,7 @@
 class BoardSerializer < ActiveModel::Serializer
   include ActionView::Helpers::DateHelper
 
-  attributes :id, :mac, :status, :name, :last_activity, :maintype, :type, :accepted_links
+  attributes :id, :mac, :status, :name, :last_activity, :type, :accepted_links
 
   def last_activity
     "#{distance_of_time_in_words(Time.now, object.last_active, include_seconds: true)} ago"

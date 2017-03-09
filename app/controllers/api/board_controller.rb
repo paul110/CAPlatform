@@ -43,7 +43,7 @@ module Api
     end
 
     def update_board_params
-      params.permit(:name, :maintype, :type)
+      params.permit(:name, :type)
     end
 
     def find_board
