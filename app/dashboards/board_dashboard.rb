@@ -18,7 +18,8 @@ class BoardDashboard < Administrate::BaseDashboard
     name: Field::String,
     type: Field::String,
     user: Field::BelongsTo,
-    user_details: Field::String
+    user_details: Field::String,
+    register_status: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -31,7 +32,8 @@ class BoardDashboard < Administrate::BaseDashboard
     :mac,
     :name,
     :type,
-    :user_details
+    :user_details,
+    :register_status
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
