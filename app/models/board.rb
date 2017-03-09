@@ -38,6 +38,9 @@ class Board < ApplicationRecord
     registered: 2
   }
 
+  scope :for_user, -> (user_id) { where(user_id: user_id) }
+  scope :for_type, -> (type) { where(type: type) }
+
   def run
     sync_data
   end
