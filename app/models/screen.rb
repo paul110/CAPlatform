@@ -10,7 +10,6 @@
 #  metadata        :jsonb
 #  name            :string           default("")
 #  last_active     :datetime
-#  maintype        :string
 #  type            :string
 #  accepted_links  :jsonb
 #  register_status :integer          default("unregistered")

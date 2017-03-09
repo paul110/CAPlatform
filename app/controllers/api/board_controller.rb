@@ -1,7 +1,7 @@
 module Api
   class BoardController < BaseController
     def index
-      @boards = Board.registered.order(:id).limit 10
+      @boards = Board.for_user(params.require(:user_id)).registered.order(:id).limit 10
       respond_to do |format|
         format.json { render json: @boards, each_serializer: BoardSerializer }
       end
@@ -43,7 +43,7 @@ module Api
     end
 
     def update_board_params
-      params.permit(:name, :maintype, :type)
+      params.permit(:name, :type)
     end
 
     def find_board

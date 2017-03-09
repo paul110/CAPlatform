@@ -10,7 +10,6 @@
 #  metadata        :jsonb
 #  name            :string           default("")
 #  last_active     :datetime
-#  maintype        :string
 #  type            :string
 #  accepted_links  :jsonb
 #  register_status :integer          default("unregistered")
@@ -19,6 +18,8 @@
 
 FactoryGirl.define do
   factory :board do
+    type "Input"
     mac "1234"
+    register_status "registered"
   end
 end

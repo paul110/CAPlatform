@@ -10,7 +10,6 @@
 #  metadata        :jsonb
 #  name            :string           default("")
 #  last_active     :datetime
-#  maintype        :string
 #  type            :string
 #  accepted_links  :jsonb
 #  register_status :integer          default("unregistered")
@@ -18,10 +17,11 @@
 #
 
 class Board < ApplicationRecord
-
+  BOARD_TYPES = %w[ Input Lcd Led Pseudoboard Screen ]
   SketchNotFound = Class.new(RuntimeError)
   include BoardHelper
 
+  validates :type, inclusion: { in: BOARD_TYPES, message: "must be one of #{BOARD_TYPES}" }, presence: true
 
   belongs_to :user, optional: true
   before_validation :update_last_active, on: :update
@@ -38,6 +38,9 @@ class Board < ApplicationRecord
     registered: 2
   }
 
+  scope :for_user, -> (user_id) { where(user_id: user_id) }
+  scope :for_type, -> (type) { where(type: type) }
+
   def run
     sync_data
   end
@@ -52,6 +55,10 @@ class Board < ApplicationRecord
 
   def edit_path
     Rails.application.routes.url_helpers.edit_admin_board_path(id)
+  end
+
+  def user_details
+    "#{user&.name}<#{user&.email}>"
   end
 
   protected

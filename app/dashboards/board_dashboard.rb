@@ -16,8 +16,9 @@ class BoardDashboard < Administrate::BaseDashboard
     metadata: Field::String.with_options(searchable: false),
     last_active: Field::DateTime,
     name: Field::String,
-    maintype: Field::String,
     type: Field::String,
+    user: Field::BelongsTo,
+    user_details: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -29,7 +30,8 @@ class BoardDashboard < Administrate::BaseDashboard
     :id,
     :mac,
     :name,
-    :maintype
+    :type,
+    :user_details
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -43,8 +45,8 @@ class BoardDashboard < Administrate::BaseDashboard
     :metadata,
     :last_active,
     :name,
-    :maintype,
     :type,
+    :user
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -53,11 +55,9 @@ class BoardDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :mac,
     :status,
-    :metadata,
-    :last_active,
     :name,
-    :maintype,
     :type,
+    :user
   ].freeze
 
   # Overwrite this method to customize how boards are displayed

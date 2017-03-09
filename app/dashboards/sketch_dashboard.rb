@@ -19,7 +19,8 @@ class SketchDashboard < Administrate::BaseDashboard
     trashed_at: Field::DateTime,
     listed: Field::Boolean,
     status: Field::String.with_options(searchable: false),
-    user_details: Field::String
+    user_details: Field::String,
+    user: Field::BelongsTo
   }.freeze
 
   # COLLECTION_ATTRIBUTES

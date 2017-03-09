@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :boards
     resources :sketches
+    resources :users
 
     root to: "boards#index"
   end
