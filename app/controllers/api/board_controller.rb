@@ -3,7 +3,7 @@ module Api
     before_action :find_board, only: [:show, :update, :deregister]
 
     def index
-      @boards = Board.for_user(params.require(:user_id)).registered.order(:id).limit 10
+      @boards = board_scope.registered.order(:id).limit 10
       respond_to do |format|
         format.json { render json: @boards, each_serializer: BoardSerializer }
       end
@@ -27,7 +27,7 @@ module Api
     def register
       @boards = find_board_partial
       @boards.each do |board|
-        board.update register_status: 'pending', user: User.first
+        board.update register_status: 'pending', user_id: params[:user_id]
         Log.register(board, 'unregistered')
         ActionCable.server.broadcast 'register_channel', board: board, type: 'board_details'
       end
@@ -47,7 +47,6 @@ module Api
 
     private
 
-
     def board_params
       params.require(:mac)
     end
@@ -57,7 +56,11 @@ module Api
     end
 
     def find_board
-      @board = Board.find_by(mac: params[:id]).presence || Board.find(params[:id])
+      @board = board_scope.find_by(mac: params[:id]).presence || board_scope.find(params[:id])
+    end
+
+    def board_scope
+      Board.for_user(params.require(:user_id))
     end
 
     def find_board_partial
