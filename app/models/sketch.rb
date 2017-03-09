@@ -22,6 +22,8 @@ class Sketch < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :creator, class_name: 'User', optional: true
 
+  before_save :disable_other_active_sketches, on: :update
+
   enum status: {
     closed: 0,
     active: 1
@@ -40,5 +42,12 @@ class Sketch < ApplicationRecord
 
   def user_details
     "#{user&.name}<#{user&.email}>"
+  end
+
+  private
+
+  def disable_other_active_sketches
+    return unless status_changed? && status == "active"
+    self.class.where.not(id: id).where(status: "active").update_all(status: "closed")
   end
 end

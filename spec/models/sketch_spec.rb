@@ -20,5 +20,15 @@
 require 'rails_helper'
 
 RSpec.describe Sketch, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let!(:sketch1) { create(:sketch, status: "closed") }
+  let!(:sketch2) { create(:sketch, status: "active") }
+
+  describe "only one active sketch" do
+    it "disables the other active sketch" do
+      sketch1.update!(status: "active")
+
+      expect(sketch1.reload.status).to eq "active"
+      expect(sketch2.reload.status).to eq "closed"
+    end
+  end
 end
