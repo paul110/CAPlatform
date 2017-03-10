@@ -21,18 +21,19 @@ RSpec.describe Api::BoardController, type: :controller do
   end
 
   describe "GET #show" do
-    let!(:board_with_mac) { create(:board, mac: "12345") }
-    let!(:board) { create(:board, mac: "5678") }
+    let!(:user) { create(:user) }
+    let!(:board_with_mac) { create(:board, mac: "12345", user: user) }
+    let!(:board) { create(:board, mac: "5678", user: user) }
 
     it "finds by mac" do
-      get :show, params: { id: board_with_mac.mac, format: :json }
+      get :show, params: { id: board_with_mac.mac, user_id: user.id, format: :json }
 
       expect(response).to have_http_status :ok
       expect(json_response["mac"]).to eq "12345"
     end
 
     it "finds the board by id" do
-      get :show, params: { id: board.id, format: :json }
+      get :show, params: { id: board.id, user_id: user.id, format: :json }
 
       expect(json_response["id"]).to eq board.id
     end
