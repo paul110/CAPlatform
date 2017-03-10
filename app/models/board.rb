@@ -25,7 +25,7 @@ class Board < ApplicationRecord
 
   belongs_to :user, optional: true
   before_validation :update_last_active, on: :update
-  after_commit :add_link_types
+  after_commit :add_link_types, on: [:update, :create]
 
   enum status: {
     offline: 0,
