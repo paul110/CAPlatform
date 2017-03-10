@@ -26,7 +26,19 @@ class Screen < Board
     }
   end
 
+  def sync_data_in
+    sketch = find_sketch
+    links = sketch.links.select{ |l| l["logic"] == "sync_data"}
+    links.each do |link|
+      if link["to"] == mac
+        sync Board.find_by(mac: link["from"])
+      end
+    end
+  end
+
+
   def run
+    sync_data_in
     broadcast
   end
 
