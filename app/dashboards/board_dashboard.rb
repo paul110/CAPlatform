@@ -19,7 +19,8 @@ class BoardDashboard < Administrate::BaseDashboard
     type: Field::String,
     user: Field::BelongsTo,
     user_details: Field::String,
-    register_status: Field::String
+    register_status: Field::String,
+    ip: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -33,7 +34,8 @@ class BoardDashboard < Administrate::BaseDashboard
     :name,
     :type,
     :user_details,
-    :register_status
+    :register_status,
+    :ip
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -48,6 +50,7 @@ class BoardDashboard < Administrate::BaseDashboard
     :last_active,
     :name,
     :type,
+    :ip,
     :user
   ].freeze
 
@@ -60,6 +63,7 @@ class BoardDashboard < Administrate::BaseDashboard
     :status,
     :name,
     :type,
+    :ip,
     :user
   ].freeze
 

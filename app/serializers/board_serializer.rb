@@ -14,6 +14,7 @@
 #  accepted_links  :jsonb
 #  register_status :integer          default("unregistered")
 #  user_id         :integer
+#  ip              :string
 #
 
 class BoardSerializer < ActiveModel::Serializer
