@@ -21,8 +21,8 @@ class Screen < Board
 
   def get_methods
     {
-      run: "default method",
-      sync_data: "synchronize url"
+      run: "open article",
+      sync_data: "get article website"
     }
   end
 

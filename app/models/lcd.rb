@@ -21,10 +21,7 @@ class Lcd < Board
 
   def get_methods
     {
-      sync_data: "display text",
-      hello: "Display hello world",
-      buna: "Display buna dimineata",
-      run: "Display articles"
+      sync_data: "Get article headline"
     }
   end
 
