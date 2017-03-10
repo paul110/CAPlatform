@@ -22,7 +22,7 @@ class Sketch < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :creator, class_name: 'User', optional: true
 
-  before_save :disable_other_active_sketches, on: :update
+  # before_save :disable_other_active_sketches, on: :update
 
   enum status: {
     closed: 0,
