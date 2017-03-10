@@ -64,7 +64,8 @@ class BoardDashboard < Administrate::BaseDashboard
     :name,
     :type,
     :ip,
-    :user
+    :user,
+    :register_status
   ].freeze
 
   # Overwrite this method to customize how boards are displayed
