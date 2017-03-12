@@ -11,7 +11,7 @@ RSpec.describe Led, type: :model do
   end
 
   it "has a valid factory" do
-    FactoryGirl.create(:led).should be_valid
+    expect(FactoryGirl.create(:led)).to be_valid
   end
 
   describe ".current_value" do
@@ -23,7 +23,6 @@ RSpec.describe Led, type: :model do
     end
   end
 
-
   describe ".update_board" do
     it "sets the correct value" do
       led1 = FactoryGirl.create(:led, mac: "1")
@@ -32,8 +31,8 @@ RSpec.describe Led, type: :model do
       led1.send(:update_board, 1)
       led2.send(:update_board, 0)
 
-      expect( led1.send(:current_value) ).to eq 1
-      expect( led2.send(:current_value) ).to eq 0
+      expect(led1.send(:current_value)).to eq 1
+      expect(led2.send(:current_value)).to eq 0
     end
   end
 
@@ -43,7 +42,7 @@ RSpec.describe Led, type: :model do
       [0, 1].each do | value |
         led.send(:update_board, value)
         led.send(:toggle)
-        expect( led.send(:current_value) ).to eq (value+1)%2
+        expect(led.send(:current_value)).to eq (value+1)%2
       end
     end
   end
