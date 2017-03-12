@@ -28,7 +28,7 @@ class Input < Board
     links = find_boards sketch, key: 'from'
     links.each do |link|
       b = Board.find_by mac: link['to']
-      BoardActionJob.perform_now b link['logic']
+      BoardActionJob.perform_now b, link['logic']
     end
     super
   end
